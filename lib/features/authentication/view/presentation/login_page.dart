@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ingatkan/features/authentication/view/presentation/register_page.dart';
 import 'package:ingatkan/features/authentication/view/view_model/view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:ingatkan/services/navigator_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -81,7 +83,12 @@ class _LoginPageState extends State<LoginPage> {
                     child: CircularProgressIndicator(color: Colors.white, strokeWidth: 4.0,))
                     : const Text('Login'));
               }
-            ))
+            )),
+            const SizedBox(height: 16,),
+            ElevatedButton(
+                onPressed: (){
+                  NavigatorService.push(context, route: const RegisterPage());
+                }, child: const Center(child: Text('Register')))
           ],
         ),
       ),

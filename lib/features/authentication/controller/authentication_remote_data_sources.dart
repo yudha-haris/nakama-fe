@@ -7,7 +7,7 @@ import 'package:ingatkan/features/authentication/model/profile.dart';
 
 abstract class AuthenticationRemoteDataSources {
   Future<Profile> login({String? username, String? password});
-  Future<Profile> register({String? username, String? password, String? name, String? phone, String? email});
+  Future<bool> register({String? username, String? password, String? name, String? phone, String? email});
 }
 
 class AuthenticationRemoteDataSourcesImpl implements AuthenticationRemoteDataSources {
@@ -23,7 +23,7 @@ class AuthenticationRemoteDataSourcesImpl implements AuthenticationRemoteDataSou
   }
 
   @override
-  Future<Profile> register({String? username, String? password, String? name, String? phone, String? email}) async {
+  Future<bool> register({String? username, String? password, String? name, String? phone, String? email}) async {
     var url = Uri.http(Environment.baseUrl, Environment.loginUrl);
     var response = await http.post(url,
         body: {'username': username ?? '',
@@ -32,11 +32,13 @@ class AuthenticationRemoteDataSourcesImpl implements AuthenticationRemoteDataSou
           'phone_number': phone ?? '',
           'name': name ?? '',
           'theme': false,
-        });
+        }).timeout(const Duration(seconds: 10));
     if(response.statusCode == 401){
       throw Error(statusCode: response.statusCode, message: "Username sudah tersedia");
+    } else if(response.statusCode == 200){
+      return true;
     }
-    return Profile(username: username, email: email, phoneNumber: phone, name: name, isAdmin: false, theme: '0');
+    return false;
   }
 
 }
