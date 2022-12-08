@@ -10,21 +10,136 @@ import '../model/activity.dart';
 abstract class ActivityRemoteDataSources {
   Future<List<Activity>> getHistory({String? username});
   Future<List<Activity>> getActivity({String? username});
+  Future<List<Activity>> postActivity(
+      {String? judul,
+      String? isi,
+      String? idPembuat,
+      String? timestamp,
+      String? categories});
+  Future<List<Activity>> putActivity(
+      {String? idActivity,
+      String? judul,
+      String? isi,
+      String? idPembuat,
+      String? timestamp,
+      String? categories});
+  Future<List<Activity>> deleteActivity({String? idActivity});
+  Future<List<Activity>> finishActivitys(
+      {String? idActivity, String? timestamp});
 }
 
 class ActivityRemoteDataSourcesImpl implements ActivityRemoteDataSources {
   @override
   Future<List<Activity>> getActivity({String? username}) async {
     var url = Uri.https(Environment.baseUrl, Environment.getActivity);
-    var response = await http.post(url, body: {'username' : username});
-    if(response.statusCode != 200){
-      throw Error(statusCode: response.statusCode, message: 'Jaringan bermasalah');
+    var response = await http.post(url, body: {'username': username});
+    if (response.statusCode != 200) {
+      throw Error(
+          statusCode: response.statusCode, message: 'Jaringan bermasalah');
     }
     var responseBody = await jsonDecode(response.body);
     log(responseBody.toString());
     var rawList = responseBody['data'] as List;
     List<Activity> result = [];
-    for(int i = 0; i < rawList.length; i++){
+    for (int i = 0; i < rawList.length; i++) {
+      result.add(Activity.parseFromResponse(rawList[i]));
+    }
+    return result;
+  }
+
+  @override
+  Future<List<Activity>> postActivity(
+      {String? judul,
+      String? isi,
+      String? idPembuat,
+      String? timestamp,
+      String? categories}) async {
+    var url = Uri.https(Environment.baseUrl, Environment.postActivity);
+    var response = await http.post(url, body: {
+      'judul': judul,
+      'isi': isi,
+      'idPembuat': idPembuat,
+      'timestamp': timestamp,
+      'categories': categories,
+    });
+    if (response.statusCode != 200) {
+      throw Error(
+          statusCode: response.statusCode, message: 'Jaringan bermasalah');
+    }
+    var responseBody = await jsonDecode(response.body);
+    log(responseBody.toString());
+    var rawList = responseBody['data'] as List;
+    List<Activity> result = [];
+    for (int i = 0; i < rawList.length; i++) {
+      result.add(Activity.parseFromResponse(rawList[i]));
+    }
+    return result;
+  }
+
+  @override
+  Future<List<Activity>> putActivity(
+      {String? idActivity,
+      String? judul,
+      String? isi,
+      String? idPembuat,
+      String? timestamp,
+      String? categories}) async {
+    var url = Uri.https(Environment.baseUrl, Environment.getActivity);
+    var response = await http.post(url, body: {
+      'idActivity': idActivity,
+      'judul': judul,
+      'isi': isi,
+      'idPembuat': idPembuat,
+      'timestamp': timestamp,
+      'categories': categories
+    });
+    if (response.statusCode != 200) {
+      throw Error(
+          statusCode: response.statusCode, message: 'Jaringan bermasalah');
+    }
+    var responseBody = await jsonDecode(response.body);
+    log(responseBody.toString());
+    var rawList = responseBody['data'] as List;
+    List<Activity> result = [];
+    for (int i = 0; i < rawList.length; i++) {
+      result.add(Activity.parseFromResponse(rawList[i]));
+    }
+    return result;
+  }
+
+  @override
+  Future<List<Activity>> deleteActivity({String? idActivity}) async {
+    var url = Uri.https(Environment.baseUrl, Environment.getActivity);
+    var response = await http.post(url, body: {'idActivity': idActivity});
+    if (response.statusCode != 200) {
+      throw Error(
+          statusCode: response.statusCode, message: 'Jaringan bermasalah');
+    }
+    var responseBody = await jsonDecode(response.body);
+    log(responseBody.toString());
+    var rawList = responseBody['data'] as List;
+    List<Activity> result = [];
+    for (int i = 0; i < rawList.length; i++) {
+      result.add(Activity.parseFromResponse(rawList[i]));
+    }
+    return result;
+  }
+
+  @override
+  Future<List<Activity>> finishActivitys(
+      {String? idActivity, String? timestamp}) async {
+    var url = Uri.https(Environment.baseUrl, Environment.getActivity);
+    var response = await http
+        .post(url, body: {'idActivity': idActivity, 'timestamp': timestamp});
+    if (response.statusCode != 200) {
+      throw Error(
+          statusCode: response.statusCode, message: 'Jaringan bermasalah');
+    }
+    var responseBody = await jsonDecode(response.body);
+    log(responseBody.toString());
+    var rawList = responseBody['data'] as List;
+    List<Activity> result = [];
+    for (int i = 0; i < rawList.length; i++) {
       result.add(Activity.parseFromResponse(rawList[i]));
     }
     return result;
@@ -33,18 +148,18 @@ class ActivityRemoteDataSourcesImpl implements ActivityRemoteDataSources {
   @override
   Future<List<Activity>> getHistory({String? username}) async {
     var url = Uri.https(Environment.baseUrl, Environment.getHistory);
-    var response = await http.post(url, body: {'username' : username});
-    if(response.statusCode != 200){
-      throw Error(statusCode: response.statusCode, message: 'Jaringan bermasalah');
+    var response = await http.post(url, body: {'username': username});
+    if (response.statusCode != 200) {
+      throw Error(
+          statusCode: response.statusCode, message: 'Jaringan bermasalah');
     }
     var responseBody = await jsonDecode(response.body);
     log(responseBody.toString());
     var rawList = responseBody['data'] as List;
     List<Activity> result = [];
-    for(int i = 0; i < rawList.length; i++){
+    for (int i = 0; i < rawList.length; i++) {
       result.add(Activity.parseFromResponse(rawList[i]));
     }
     return result;
   }
-  
 }
