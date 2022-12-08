@@ -101,8 +101,10 @@ mixin _$TimelineViewModel on TimelineViewModelBase, Store {
       AsyncAction('TimelineViewModelBase.updateTimeline', context: context);
 
   @override
-  Future<void> updateTimeline(BuildContext context) {
-    return _$updateTimelineAsyncAction.run(() => super.updateTimeline(context));
+  Future<void> updateTimeline(BuildContext context,
+      {String? id, String? judul, String? isi}) {
+    return _$updateTimelineAsyncAction.run(
+        () => super.updateTimeline(context, id: id, judul: judul, isi: isi));
   }
 
   late final _$deleteTimelineAsyncAction =
