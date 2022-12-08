@@ -42,62 +42,74 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           children: [
             const Text('Username: '),
-            const SizedBox(height: 16,),
-            RegisterTextField(
-                controller: _username,
-                hint: 'Masukkan username'),
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
+            RegisterTextField(controller: _username, hint: 'Masukkan username'),
+            const SizedBox(
+              height: 16,
+            ),
             const Text('Masukkan nama: '),
-            RegisterTextField(
-                controller: _name,
-                hint: 'Masukkan nama'),
-            const SizedBox(height: 16,),
+            RegisterTextField(controller: _name, hint: 'Masukkan nama'),
+            const SizedBox(
+              height: 16,
+            ),
             const Text('Masukkan email: '),
-            RegisterTextField(
-                controller: _email,
-                hint: 'Masukkan email'),
-            const SizedBox(height: 16,),
+            RegisterTextField(controller: _email, hint: 'Masukkan email'),
+            const SizedBox(
+              height: 16,
+            ),
             const Text('Masukkan nomor telepon: '),
             RegisterTextField(
-                controller: _phoneNumber,
-                hint: 'Masukkan nomor telepon'),
-            const SizedBox(height: 16,),
+                controller: _phoneNumber, hint: 'Masukkan nomor telepon'),
+            const SizedBox(
+              height: 16,
+            ),
             const Text('Masukkan password: '),
             RegisterTextField(
                 controller: _password,
                 obscuredText: true,
                 hint: 'Masukkan password'),
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             const Text('Masukkan ulang password: '),
             RegisterTextField(
                 controller: _confirmPassword,
                 obscuredText: true,
                 hint: 'Masukkan ulang password'),
-            ElevatedButton(
-                onPressed: (){
-                  if(!_viewModel.isLoading){
-                    _viewModel.register(context,
-                      username: _username.text,
-                      phone: _phoneNumber.text,
-                      password: _password.text,
-                      email: _email.text,
-                    );
-                  }
-                }, child: Observer(
-                builder: (_) {
-                  return Center(child: _viewModel.isLoading
+            ElevatedButton(onPressed: () {
+              if (!_viewModel.isLoading) {
+                _viewModel.register(
+                  context,
+                  username: _username.text,
+                  name: _name.text,
+                  phone: _phoneNumber.text,
+                  password: _password.text,
+                  confirmPassword: _confirmPassword.text,
+                  email: _email.text,
+                );
+              }
+            }, child: Observer(builder: (_) {
+              return Center(
+                  child: _viewModel.isLoading
                       ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(color: Colors.white, strokeWidth: 4.0,))
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 4.0,
+                          ))
                       : const Text('Register'));
-                }
-            )),
-            const SizedBox(height: 16,),
+            })),
+            const SizedBox(
+              height: 16,
+            ),
             ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.pop(context);
-                }, child: const Center(child: Text('Login')))
+                },
+                child: const Center(child: Text('Login')))
           ],
         ),
       ),
@@ -110,24 +122,25 @@ class RegisterTextField extends StatelessWidget {
   final String hint;
   final bool obscuredText;
 
-  const RegisterTextField({Key? key, required this.controller, required this.hint, this.obscuredText = false}) : super(key: key);
+  const RegisterTextField(
+      {Key? key,
+      required this.controller,
+      required this.hint,
+      this.obscuredText = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black, width: 1)
-      ),
+      decoration:
+          BoxDecoration(border: Border.all(color: Colors.black, width: 1)),
       height: 50,
       width: double.infinity,
       child: TextField(
         controller: controller,
         obscureText: obscuredText,
-        decoration: InputDecoration(
-            hintText: hint
-        ),
+        decoration: InputDecoration(hintText: hint),
       ),
     );
   }
 }
-
