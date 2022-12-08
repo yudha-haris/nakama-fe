@@ -19,8 +19,8 @@ part 'view_model.g.dart';
 class ActivityViewModel = ActivityViewModelBase with _$ActivityViewModel;
 
 abstract class ActivityViewModelBase with Store {
-
-  final ActivityRemoteDataSources _dataSources = ActivityRemoteDataSourcesImpl();
+  final ActivityRemoteDataSources _dataSources =
+      ActivityRemoteDataSourcesImpl();
   final DialogService _dialogService = DialogService();
 
   @observable
@@ -42,22 +42,20 @@ abstract class ActivityViewModelBase with Store {
       var temp = await _dataSources.getHistory(username: username);
       log(temp.toString());
       _histories.clear();
-      for(var i = 0; i < temp.length; i++){
+      for (var i = 0; i < temp.length; i++) {
         _histories.add(temp[i]);
       }
       _isLoading.value = false;
-
-    } catch (e){
+    } catch (e) {
       _isLoading.value = false;
-      if(e is Error){
-        if(e.statusCode == 401){
+      if (e is Error) {
+        if (e.statusCode == 401) {
           _dialogService.networkError(context);
         }
       }
       log(e.toString());
       _dialogService.networkError(context);
     }
-
   }
 
   @action
@@ -67,21 +65,113 @@ abstract class ActivityViewModelBase with Store {
       var temp = await _dataSources.getActivity(username: username);
       log(temp.toString());
       _activities.clear();
-      for(var i = 0; i < temp.length; i++){
+      for (var i = 0; i < temp.length; i++) {
         _activities.add(temp[i]);
       }
       _isLoading.value = false;
-    } catch (e){
+    } catch (e) {
       _isLoading.value = false;
-      if(e is Error){
-        if(e.statusCode == 401){
+      if (e is Error) {
+        if (e.statusCode == 401) {
           _dialogService.networkError(context);
         }
       }
       log(e.toString());
       _dialogService.networkError(context);
     }
+  }
 
+  @action
+  Future<void> putActivity(BuildContext context,
+      {String? judul, String? isi, String? idActivity}) async {
+    try {
+      _isLoading.value = true;
+      var temp = await _dataSources.putActivity(
+        idActivity: idActivity,
+        judul: judul,
+        idPembuat: ProfileData.data.username,
+        isi: isi,
+        timestamp:
+            '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}',
+        categories: '',
+      );
+      _isLoading.value = false;
+      if (temp) {
+        NavigatorService.pushReplacement(context, route: HomePage());
+      } else {
+        _dialogService.networkError(context);
+      }
+    } catch (e) {
+      _isLoading.value = false;
+      _dialogService.networkError(context);
+    }
+  }
+
+  @action
+  Future<void> postActivity(BuildContext context,
+      {String? judul, String? isi}) async {
+    try {
+      _isLoading.value = true;
+      var temp = await _dataSources.postActivity(
+        judul: judul,
+        idPembuat: ProfileData.data.username,
+        isi: isi,
+        timestamp:
+            '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}',
+        categories: '',
+      );
+      _isLoading.value = false;
+      if (temp) {
+        NavigatorService.pushReplacement(context, route: HomePage());
+      } else {
+        _dialogService.networkError(context);
+      }
+    } catch (e) {
+      _isLoading.value = false;
+      _dialogService.networkError(context);
+    }
+  }
+
+  @action
+  Future<void> deleteActivity(BuildContext context,
+      {String? idActivity}) async {
+    try {
+      _isLoading.value = true;
+      var temp = await _dataSources.deleteActivity(
+        idActivity: idActivity,
+      );
+      _isLoading.value = false;
+      if (temp) {
+        NavigatorService.pushReplacement(context, route: HomePage());
+      } else {
+        _dialogService.networkError(context);
+      }
+    } catch (e) {
+      _isLoading.value = false;
+      _dialogService.networkError(context);
+    }
+  }
+
+  @action
+  Future<void> finishActivity(BuildContext context,
+      {String? idActivity}) async {
+    try {
+      _isLoading.value = true;
+      var temp = await _dataSources.finishActivitys(
+        idActivity: idActivity,
+        timestamp:
+            '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}',
+      );
+      _isLoading.value = false;
+      if (temp) {
+        NavigatorService.pushReplacement(context, route: HomePage());
+      } else {
+        _dialogService.networkError(context);
+      }
+    } catch (e) {
+      _isLoading.value = false;
+      _dialogService.networkError(context);
+    }
   }
 
   @computed
@@ -95,5 +185,4 @@ abstract class ActivityViewModelBase with Store {
 
   @computed
   bool get isLoading => _isLoading.value;
-
 }
