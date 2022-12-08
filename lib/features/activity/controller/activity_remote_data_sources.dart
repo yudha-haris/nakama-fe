@@ -57,11 +57,11 @@ class ActivityRemoteDataSourcesImpl implements ActivityRemoteDataSources {
     var response = await http.post(url, body: {
       'judul': judul,
       'isi': isi,
-      'idPembuat': idPembuat,
+      'username': idPembuat,
       'timestamp': timestamp,
       'categories': categories,
     });
-    if (response.statusCode != 200) {
+    if (response.statusCode == 200) {
       return true;
     } else {
       throw Error();
@@ -78,14 +78,15 @@ class ActivityRemoteDataSourcesImpl implements ActivityRemoteDataSources {
       String? categories}) async {
     var url = Uri.https(Environment.baseUrl, Environment.putActivity);
     var response = await http.post(url, body: {
-      'idActivity': idActivity,
+      'id_activity': idActivity,
       'judul': judul,
       'isi': isi,
-      'idPembuat': idPembuat,
+      'username': idPembuat,
       'timestamp': timestamp,
       'categories': categories
     });
-    if (response.statusCode != 200) {
+    log(response.body.toString());
+    if (response.statusCode == 200) {
       return true;
     } else {
       throw Error();
@@ -95,8 +96,8 @@ class ActivityRemoteDataSourcesImpl implements ActivityRemoteDataSources {
   @override
   Future<bool> deleteActivity({String? idActivity}) async {
     var url = Uri.https(Environment.baseUrl, Environment.deleteActivity);
-    var response = await http.post(url, body: {'idActivity': idActivity});
-    if (response.statusCode != 200) {
+    var response = await http.post(url, body: {'id_activity': idActivity});
+    if (response.statusCode == 200) {
       return true;
     } else {
       throw Error();
@@ -107,8 +108,8 @@ class ActivityRemoteDataSourcesImpl implements ActivityRemoteDataSources {
   Future<bool> finishActivitys({String? idActivity, String? timestamp}) async {
     var url = Uri.https(Environment.baseUrl, Environment.finishActivity);
     var response = await http
-        .post(url, body: {'idActivity': idActivity, 'timestamp': timestamp});
-    if (response.statusCode != 200) {
+        .post(url, body: {'id_activity': idActivity, 'timestamp': timestamp});
+    if (response.statusCode == 200) {
       return true;
     } else {
       throw Error();
