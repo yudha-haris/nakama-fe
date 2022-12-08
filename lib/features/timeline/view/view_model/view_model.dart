@@ -1,8 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:ingatkan/core/global/profile_data.dart';
+import 'package:ingatkan/features/home/view/presentation/home_page.dart';
 import 'package:ingatkan/features/timeline/model/timeline.dart';
 import 'package:ingatkan/services/dialog_service.dart';
+import 'package:ingatkan/services/navigator_service.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../controller/timeline_remote_data_sources.dart';
@@ -46,12 +49,14 @@ abstract class TimelineViewModelBase with Store {
   Future<void> createTimeline(BuildContext context, {String? judul, String? isi}) async {
     try {
       _isLoading.value = true;
-      var temp = await _dataSources.getAllTimeline();
-      log(temp.toString());
-      for(var i = 0; i < temp.length; i++){
-        _timelines.add(temp[i]);
-      }
+      var temp = await _dataSources.createTimeline(username: ProfileData.data.username, judul: judul, isi: isi);
+
       _isLoading.value = false;
+      if(temp){
+        NavigatorService.pushReplacement(context, route: const HomePage());
+      } else {
+        _dialogService.networkError(context);
+      }
     } catch (e){
       _isLoading.value = false;
       _dialogService.networkError(context);
@@ -59,15 +64,25 @@ abstract class TimelineViewModelBase with Store {
   }
 
   @action
-  Future<void> updateTimeline(BuildContext context) async {
+  Future<void> updateTimeline(BuildContext context, {
+    String? id,
+    String? judul,
+    String? isi,
+}) async {
     try {
       _isLoading.value = true;
-      var temp = await _dataSources.getAllTimeline();
-      log(temp.toString());
-      for(var i = 0; i < temp.length; i++){
-        _timelines.add(temp[i]);
-      }
+      var temp = await _dataSources.updateTimeline(
+        id: id,
+        judul: judul,
+        isi: isi,
+      );
       _isLoading.value = false;
+      if(temp){
+        NavigatorService.pushReplacement(context, route: const HomePage());
+      } else {
+        _dialogService.networkError(context);
+      }
+
     } catch (e){
       _isLoading.value = false;
       _dialogService.networkError(context);
@@ -79,9 +94,13 @@ abstract class TimelineViewModelBase with Store {
     try {
       _isLoading.value = true;
       var temp = await _dataSources.deleteTimeline(id: id);
-      log(temp.toString());
 
       _isLoading.value = false;
+      if(temp){
+        NavigatorService.pushReplacement(context, route: const HomePage());
+      } else {
+        _dialogService.networkError(context);
+      }
     } catch (e){
       _isLoading.value = false;
       _dialogService.networkError(context);
@@ -93,7 +112,9 @@ abstract class TimelineViewModelBase with Store {
     try {
       _isLoading.value = true;
       var temp = await _dataSources.getTimeline(id: id);
+      log('===============');
       log(temp.toString());
+      _timeline.value = temp;
 
       _isLoading.value = false;
     } catch (e){

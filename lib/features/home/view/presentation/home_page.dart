@@ -3,6 +3,7 @@ import 'package:ingatkan/core/global/profile_data.dart';
 import 'package:ingatkan/features/activity/view/presentation/activities_page.dart';
 import 'package:ingatkan/features/activity/view/presentation/history_page.dart';
 import 'package:ingatkan/features/authentication/view/presentation/login_page.dart';
+import 'package:ingatkan/features/timeline/view/presentation/create_timeline_page.dart';
 import 'package:ingatkan/features/timeline/view/presentation/timeline_page.dart';
 import 'package:ingatkan/services/navigator_service.dart';
 
@@ -50,7 +51,11 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {  },
+        onPressed: () {
+          if(ProfileData.data.isAdmin ?? false){
+            NavigatorService.push(context, route: const CreateTimelinePage());
+          }
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
