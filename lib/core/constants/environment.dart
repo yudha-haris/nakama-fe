@@ -14,4 +14,8 @@ class Environment {
   static const createTimeline = 'timeline/create';
   static const updateTimeline = 'timeline/update';
   static const deleteTimeline = 'timeline/delete';
+
+  // Activity
+  static const getHistory = 'histori/histori';
+  static const getActivity = 'activities/read_activities_api';
 }

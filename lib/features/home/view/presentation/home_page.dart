@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ingatkan/core/global/profile_data.dart';
+import 'package:ingatkan/features/activity/view/presentation/activities_page.dart';
+import 'package:ingatkan/features/activity/view/presentation/history_page.dart';
 import 'package:ingatkan/features/authentication/view/presentation/login_page.dart';
 import 'package:ingatkan/features/timeline/view/presentation/timeline_page.dart';
 import 'package:ingatkan/services/navigator_service.dart';
@@ -27,16 +29,20 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ingatkan'),
+        actions: <Widget>[
+          IconButton(onPressed: (){
+            NavigatorService.push(context, route: const HistoryPage());
+          }, icon: const Icon(Icons.history))
+        ],
       ),
       drawer: const HomePageDrawer(),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         allowImplicitScrolling: false,
         controller: _controller,
-        children: [
-          Container(
-          ),
-          const TimelinePage(),
+        children: const [
+          ActivitiesPage(),
+          TimelinePage(),
         ],
       ),
       bottomNavigationBar: HomePageBottomNavigationBar(

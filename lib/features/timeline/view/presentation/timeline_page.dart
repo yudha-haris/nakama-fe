@@ -63,8 +63,8 @@ class _TimelinePageState extends State<TimelinePage> {
                       ),
                       child: GestureDetector(
                         onTap: () async {
-                          await _viewModel.getTimeline(context, id: _viewModel.timelines[index].id);
-                          NavigatorService.push(context, route: const SingleTimelinePage());
+                          // await _viewModel.getTimeline(context, id: _viewModel.timelines[index].id);
+                          // NavigatorService.push(context, route: const SingleTimelinePage());
                         },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
