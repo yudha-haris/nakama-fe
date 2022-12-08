@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ingatkan/core/global/profile_data.dart';
 import 'package:ingatkan/features/activity/view/presentation/activities_page.dart';
+import 'package:ingatkan/features/activity/view/presentation/create_activity_page.dart';
 import 'package:ingatkan/features/activity/view/presentation/history_page.dart';
 import 'package:ingatkan/features/authentication/view/presentation/login_page.dart';
 import 'package:ingatkan/features/timeline/view/presentation/create_timeline_page.dart';
@@ -54,6 +55,8 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           if(ProfileData.data.isAdmin ?? false){
             NavigatorService.push(context, route: const CreateTimelinePage());
+          } else {
+            NavigatorService.push(context, route: const CreateActivityPage());
           }
         },
       ),
@@ -145,7 +148,13 @@ class HomeBottomNavBarItem extends StatelessWidget {
   final bool isSelected;
   final IconData icon;
   final String label;
-  const HomeBottomNavBarItem({Key? key, required this.onTap, required this.isSelected, required this.icon, required this.label}) : super(key: key);
+  const HomeBottomNavBarItem(
+      {Key? key,
+      required this.onTap,
+      required this.isSelected,
+      required this.icon,
+      required this.label})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +183,3 @@ class HomeBottomNavBarItem extends StatelessWidget {
     );
   }
 }
-
-
-
