@@ -4,6 +4,7 @@ import 'package:ingatkan/features/activity/view/presentation/activities_page.dar
 import 'package:ingatkan/features/activity/view/presentation/create_activity_page.dart';
 import 'package:ingatkan/features/activity/view/presentation/history_page.dart';
 import 'package:ingatkan/features/authentication/view/presentation/login_page.dart';
+import 'package:ingatkan/features/timeline/view/presentation/create_timeline_page.dart';
 import 'package:ingatkan/features/timeline/view/presentation/timeline_page.dart';
 import 'package:ingatkan/services/navigator_service.dart';
 
@@ -31,11 +32,9 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Ingatkan'),
         actions: <Widget>[
-          IconButton(
-              onPressed: () {
-                NavigatorService.push(context, route: const HistoryPage());
-              },
-              icon: const Icon(Icons.history))
+          IconButton(onPressed: (){
+            NavigatorService.push(context, route: const HistoryPage());
+          }, icon: const Icon(Icons.history))
         ],
       ),
       drawer: const HomePageDrawer(),
@@ -54,7 +53,11 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          NavigatorService.push(context, route: const CreateActivityPage());
+          if(ProfileData.data.isAdmin ?? false){
+            NavigatorService.push(context, route: const CreateTimelinePage());
+          } else {
+            NavigatorService.push(context, route: const CreateActivityPage());
+          }
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -71,33 +74,18 @@ class HomePageDrawer extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: [
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16,),
             Text(ProfileData.data.username ?? 'Pengguna'),
-            const SizedBox(
-              height: 16,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  // move to kategori page
-                },
-                child: const Center(
-                  child: Text('Kategori'),
-                )),
+            const SizedBox(height: 16,),
+            ElevatedButton(onPressed: (){
+              // move to kategori page
+            }, child: const Center(child: Text('Kategori'),)),
             const Spacer(),
-            ElevatedButton(
-                onPressed: () {
-                  ProfileData.data = Profile();
-                  NavigatorService.pushReplacement(context,
-                      route: const LoginPage());
-                },
-                child: const Center(
-                  child: Text('Keluar'),
-                )),
-            const SizedBox(
-              height: 16,
-            ),
+            ElevatedButton(onPressed: (){
+              ProfileData.data = Profile();
+              NavigatorService.pushReplacement(context, route: const LoginPage());
+            }, child: const Center(child: Text('Keluar'),)),
+            const SizedBox(height: 16,),
           ],
         ),
       ),
@@ -107,16 +95,13 @@ class HomePageDrawer extends StatelessWidget {
 
 class HomePageBottomNavigationBar extends StatefulWidget {
   final PageController controller;
-  const HomePageBottomNavigationBar({Key? key, required this.controller})
-      : super(key: key);
+  const HomePageBottomNavigationBar({Key? key, required this.controller}) : super(key: key);
 
   @override
-  State<HomePageBottomNavigationBar> createState() =>
-      _HomePageBottomNavigationBarState();
+  State<HomePageBottomNavigationBar> createState() => _HomePageBottomNavigationBarState();
 }
 
-class _HomePageBottomNavigationBarState
-    extends State<HomePageBottomNavigationBar> {
+class _HomePageBottomNavigationBarState extends State<HomePageBottomNavigationBar> {
   var pageIndex = 0;
 
   @override
@@ -132,27 +117,23 @@ class _HomePageBottomNavigationBarState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             HomeBottomNavBarItem(
-                onTap: () {
+                onTap: (){
                   setState(() {
-                    widget.controller.animateToPage(0,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeIn);
+                    widget.controller.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
                     pageIndex = 0;
                   });
                 },
-                isSelected: pageIndex == 0,
+                isSelected: pageIndex == 0 ,
                 icon: Icons.alarm,
                 label: 'Activities'),
             HomeBottomNavBarItem(
-                onTap: () {
+                onTap: (){
                   setState(() {
-                    widget.controller.animateToPage(1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeIn);
+                    widget.controller.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
                     pageIndex = 1;
                   });
                 },
-                isSelected: pageIndex == 1,
+                isSelected: pageIndex == 1 ,
                 icon: Icons.file_present,
                 label: 'Timeline'),
           ],
@@ -179,7 +160,7 @@ class HomeBottomNavBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: () {
+        onTap: (){
           onTap.call();
         },
         child: Column(
@@ -189,23 +170,16 @@ class HomeBottomNavBarItem extends StatelessWidget {
               height: 4,
               color: isSelected ? Colors.lightBlueAccent : Colors.transparent,
             ),
-            Expanded(
-                child: Column(
+            Expanded(child:
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(icon, color: Colors.white),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  label,
-                  style: const TextStyle(color: Colors.white),
-                )
-              ],
-            ))
-          ],
-        ),
-      ),
+                const SizedBox(height: 4,),
+                Text(label, style: const TextStyle(color: Colors.white),)
+              ],))
+
+          ],),),
     );
   }
 }
