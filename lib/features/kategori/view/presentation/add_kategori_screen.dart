@@ -36,7 +36,8 @@ class _AddKategoriScreenState extends State<AddKategoriScreen> {
         actions: [
           IconButton(
               onPressed: () async {
-                await _viewModel.addKategori(context,
+                await _viewModel.addKategori(
+                  context,
                     judul: judul.text,
                 );
               },

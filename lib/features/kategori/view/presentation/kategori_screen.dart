@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:ingatkan/core/global/profile_data.dart';
+import 'package:ingatkan/features/kategori/view/presentation/add_kategori_screen.dart';
 import 'package:ingatkan/features/kategori/view/presentation/update_kategori_screen.dart';
 import 'package:ingatkan/features/kategori/view/view_model/view_model.dart';
 import 'package:ingatkan/services/navigator_service.dart';
@@ -99,6 +100,13 @@ class _KategoriScreenState extends State<KategoriScreen> {
             );
           }),
         ),
+      ),
+      floatingActionButton:  FloatingActionButton(
+        onPressed: () {
+          NavigatorService.push(context, route: const AddKategoriScreen());
+        },
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
       ),
     );
   }
