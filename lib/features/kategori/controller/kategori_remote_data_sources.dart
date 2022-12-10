@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:ingatkan/core/constants/environment.dart';
@@ -84,9 +85,10 @@ class KategoriRemoteDataSourcesImpl implements KategoriRemoteDataSources {
   Future<List<Kategori>> getKategori({String? username}) async {
     var url = Uri.https(Environment.baseUrl, Environment.getAllKategori);
     var response = await http.post(url, body: {'username': username});
+    log(response.body.toString());
     if (response.statusCode != 200) {
       throw Error(
-          statusCode: response.statusCode, message: 'Error');
+          statusCode: response.statusCode, message: response.body.toString());
     }
     var responseBody = await jsonDecode(response.body);
     var rawList = responseBody['data'] as List;

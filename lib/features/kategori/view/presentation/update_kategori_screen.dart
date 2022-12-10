@@ -36,7 +36,7 @@ class _UpdateActivityPageState extends State<UpdateKategoriScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Activity'),
+        title: const Text('Edit Category'),
         actions: [
           IconButton(
               onPressed: () async {

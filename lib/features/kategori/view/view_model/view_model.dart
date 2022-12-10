@@ -61,7 +61,7 @@ abstract class KategoriViewModelBase with Store {
         }
       }
       log(e.toString());
-      _dialogService.networkError(context);
+      _dialogService.showMessageDialog(context, message: (e as Error).message.toString());
     }
   }
 

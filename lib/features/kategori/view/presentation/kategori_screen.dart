@@ -30,70 +30,75 @@ class _KategoriScreenState extends State<KategoriScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        await _viewModel.getKategori(context,
-            username: ProfileData.data.username);
-      },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        controller: _controller,
-        child: Observer(builder: (context) {
-          return Stack(
-            children: [
-              ListView(
-                controller: _controller,
-                shrinkWrap: true,
-                children: List.generate(_viewModel.categories.length, (index) {
-                  String judul = _viewModel.categories[index].judul ?? '';
-                  return InkWell(
-                    onTap: () {
-                      NavigatorService.push(context,
-                          route: UpdateKategoriScreen(
-                              kategori: _viewModel.categories[index]));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(20)),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 16),
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(judul),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        _viewModel.deleteKategori(
-                                            context,
-                                            idKategori: _viewModel
-                                                .categories[index].id);
-                                      },
-                                      icon: Icon(Icons.delete))
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Category Page'),
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await _viewModel.getKategori(context,
+              username: ProfileData.data.username);
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          controller: _controller,
+          child: Observer(builder: (context) {
+            return Stack(
+              children: [
+                ListView(
+                  controller: _controller,
+                  shrinkWrap: true,
+                  children: List.generate(_viewModel.categories.length, (index) {
+                    String judul = _viewModel.categories[index].judul ?? '';
+                    return InkWell(
+                      onTap: () {
+                        NavigatorService.push(context,
+                            route: UpdateKategoriScreen(
+                                kategori: _viewModel.categories[index]));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black, width: 1),
+                            borderRadius: BorderRadius.circular(20)),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 16),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(judul),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          _viewModel.deleteKategori(
+                                              context,
+                                              idKategori: _viewModel
+                                                  .categories[index].id);
+                                        },
+                                        icon: Icon(Icons.delete))
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }),
-              ),
-            ],
-          );
-        }),
+                    );
+                  }),
+                ),
+              ],
+            );
+          }),
+        ),
       ),
     );
   }
