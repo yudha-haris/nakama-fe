@@ -12,21 +12,32 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Nakama',
       theme: ThemeData(
         brightness: Brightness.light,
         /* light theme settings */
+        primaryColor: Color.fromARGB(255, 247, 77, 94),
+        appBarTheme: AppBarTheme(
+          color: Color.fromARGB(255, 247, 77, 94),
+        ),
+        accentColor: Color.fromARGB(255, 252, 123, 77),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+          primary: Color.fromARGB(255, 252, 123, 77),
+        )),
       ),
       darkTheme: ThemeData(
-        // TODO(Adeline): edit style
         brightness: Brightness.dark,
-        // TODO(Adeline): Edit Style
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.deepPurple,
-          )
-        ),
         /* dark theme settings */
+        primaryColor: Color.fromARGB(255, 120, 134, 238),
+        appBarTheme: AppBarTheme(
+          color: Color.fromARGB(255, 120, 134, 238), //<-- SEE HERE
+        ),
+        accentColor: Color.fromRGBO(179, 106, 251, 1),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+          primary: Color.fromRGBO(179, 106, 251, 1),
+        )),
       ),
       // TODO(All): Kalau mau liat lightmode sama darkmode ganti di bawah
       themeMode: ThemeMode.dark,

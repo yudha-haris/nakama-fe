@@ -34,9 +34,11 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Ingatkan'),
         actions: <Widget>[
-          IconButton(onPressed: (){
-            NavigatorService.push(context, route: const HistoryPage());
-          }, icon: const Icon(Icons.history))
+          IconButton(
+              onPressed: () {
+                NavigatorService.push(context, route: const HistoryPage());
+              },
+              icon: const Icon(Icons.history))
         ],
       ),
       drawer: const HomePageDrawer(),
@@ -55,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          if(ProfileData.data.isAdmin ?? false){
+          if (ProfileData.data.isAdmin ?? false) {
             NavigatorService.push(context, route: const CreateTimelinePage());
           } else {
             NavigatorService.push(context, route: const CreateActivityPage());
@@ -76,36 +78,46 @@ class HomePageDrawer extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             InkWell(
-                onTap: (){
+                onTap: () {
                   NavigatorService.push(context, route: const ProfilePage());
                 },
                 child: SizedBox(
                     width: double.infinity,
                     child: Center(
                         child: Column(
-                          children: [
-                            const CircleAvatar(
-                              child: Icon(Icons.person),
-                            ),
-                            const SizedBox(height: 8,),
-                            Text(ProfileData.data.username ?? 'Pengguna',
-                            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-                            ),
-                          ],
-                        )))),
-            const SizedBox(height: 16,),
-            IngatkanButton(label: 'Kategori', onPressed: (){
-
-            }),
+                      children: [
+                        const CircleAvatar(
+                          child: Icon(Icons.person),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          ProfileData.data.username ?? 'Pengguna',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 16),
+                        ),
+                      ],
+                    )))),
+            const SizedBox(
+              height: 16,
+            ),
+            IngatkanButton(label: 'Kategori', onPressed: () {}),
             const Spacer(),
             IngatkanButton(
-                label: 'Keluar', onPressed: (){
+                label: 'Keluar',
+                onPressed: () {
                   ProfileData.data = Profile();
-                  NavigatorService.pushReplacement(context, route: const LoginPage());
-            }),
-            const SizedBox(height: 16,),
+                  NavigatorService.pushReplacement(context,
+                      route: const LoginPage());
+                }),
+            const SizedBox(
+              height: 16,
+            ),
           ],
         ),
       ),
@@ -115,13 +127,16 @@ class HomePageDrawer extends StatelessWidget {
 
 class HomePageBottomNavigationBar extends StatefulWidget {
   final PageController controller;
-  const HomePageBottomNavigationBar({Key? key, required this.controller}) : super(key: key);
+  const HomePageBottomNavigationBar({Key? key, required this.controller})
+      : super(key: key);
 
   @override
-  State<HomePageBottomNavigationBar> createState() => _HomePageBottomNavigationBarState();
+  State<HomePageBottomNavigationBar> createState() =>
+      _HomePageBottomNavigationBarState();
 }
 
-class _HomePageBottomNavigationBarState extends State<HomePageBottomNavigationBar> {
+class _HomePageBottomNavigationBarState
+    extends State<HomePageBottomNavigationBar> {
   var pageIndex = 0;
 
   @override
@@ -129,7 +144,7 @@ class _HomePageBottomNavigationBarState extends State<HomePageBottomNavigationBa
     return SizedBox(
       height: 64,
       child: BottomAppBar(
-        color: Colors.blueAccent,
+        color: Theme.of(context).primaryColor,
         shape: const CircularNotchedRectangle(),
         notchMargin: 5.0,
         child: Row(
@@ -137,23 +152,27 @@ class _HomePageBottomNavigationBarState extends State<HomePageBottomNavigationBa
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             HomeBottomNavBarItem(
-                onTap: (){
+                onTap: () {
                   setState(() {
-                    widget.controller.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                    widget.controller.animateToPage(0,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeIn);
                     pageIndex = 0;
                   });
                 },
-                isSelected: pageIndex == 0 ,
+                isSelected: pageIndex == 0,
                 icon: Icons.alarm,
                 label: 'Activities'),
             HomeBottomNavBarItem(
-                onTap: (){
+                onTap: () {
                   setState(() {
-                    widget.controller.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                    widget.controller.animateToPage(1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeIn);
                     pageIndex = 1;
                   });
                 },
-                isSelected: pageIndex == 1 ,
+                isSelected: pageIndex == 1,
                 icon: Icons.file_present,
                 label: 'Timeline'),
           ],
@@ -180,7 +199,7 @@ class HomeBottomNavBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: (){
+        onTap: () {
           onTap.call();
         },
         child: Column(
@@ -190,16 +209,23 @@ class HomeBottomNavBarItem extends StatelessWidget {
               height: 4,
               color: isSelected ? Colors.lightBlueAccent : Colors.transparent,
             ),
-            Expanded(child:
-            Column(
+            Expanded(
+                child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(icon, color: Colors.white),
-                const SizedBox(height: 4,),
-                Text(label, style: const TextStyle(color: Colors.white),)
-              ],))
-
-          ],),),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  label,
+                  style: const TextStyle(color: Colors.white),
+                )
+              ],
+            ))
+          ],
+        ),
+      ),
     );
   }
 }
