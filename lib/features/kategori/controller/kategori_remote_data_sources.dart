@@ -10,7 +10,7 @@ import 'package:ingatkan/features/kategori/model/kategori.dart';
 abstract class KategoriRemoteDataSources {
 
   Future<bool> addKategori(
-      {String? idKategori,
+      {
         String? judul,
         String? username,
       });
@@ -35,13 +35,11 @@ class KategoriRemoteDataSourcesImpl implements KategoriRemoteDataSources {
 
   @override
   Future<bool> addKategori({
-    String? idKategori,
     String? judul,
     String? username,
   }) async {
     var url = Uri.https(Environment.baseUrl, Environment.createKategori);
     var response = await http.post(url, body: {
-      'id_kategori': idKategori,
       'judul': judul,
       'username': username,
     });

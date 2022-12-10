@@ -102,7 +102,7 @@ abstract class KategoriViewModelBase with Store {
       _isLoading.value = true;
       var temp = await _dataSources.addKategori(
         judul: judul,
-        username: ProfileData.data.username,
+        username: ProfileData.data.username ?? '',
       );
       _isLoading.value = false;
       if (temp) {
@@ -111,7 +111,7 @@ abstract class KategoriViewModelBase with Store {
         _dialogService.networkError(context);
       }
     } catch (e) {
-      DialogService().showMessageDialog(context, message: (e as Exception).toString());
+      _dialogService.showMessageDialog(context, message: e.toString());
       _isLoading.value = false;
       _dialogService.networkError(context);
     }
