@@ -117,7 +117,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                                           context,
                                           title: 'Hapus Activity',
                                           message:
-                                              'Apakah anda yakin untuk mengapus ${_viewModel.activities[index].judul}?',
+                                              'Apakah anda yakin untuk menghapus ${_viewModel.activities[index].judul}?',
                                           action: () async {
                                             Navigator.of(context).pop();
                                             DialogService().actionDialog(

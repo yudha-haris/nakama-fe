@@ -16,12 +16,14 @@ class UpdateActivityPage extends StatefulWidget {
 class _UpdateActivityPageState extends State<UpdateActivityPage> {
   late TextEditingController judul;
   late TextEditingController isi;
+  late TextEditingController kategori;
   final ActivityViewModel _viewModel = ActivityViewModel();
 
   @override
   void initState() {
     judul = TextEditingController(text: widget.activity.judul);
     isi = TextEditingController(text: widget.activity.isi);
+
     super.initState();
   }
 
@@ -77,6 +79,13 @@ class _UpdateActivityPageState extends State<UpdateActivityPage> {
             IngatkanTextField(
               hint: 'Masukkan isi',
               controller: isi,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            IngatkanTextField(
+              hint: 'Masukkan Kategori',
+              controller: kategori,
             ),
           ],
         ),

@@ -13,12 +13,14 @@ class CreateActivityPage extends StatefulWidget {
 class _CreateActivityPageState extends State<CreateActivityPage> {
   late TextEditingController judul;
   late TextEditingController isi;
+  late TextEditingController kategori;
   final ActivityViewModel _viewModel = ActivityViewModel();
 
   @override
   void initState() {
     judul = TextEditingController();
     isi = TextEditingController();
+    kategori = TextEditingController();
     super.initState();
   }
 
@@ -26,6 +28,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
   void dispose() {
     judul.dispose();
     isi.dispose();
+    kategori.dispose();
     super.dispose();
   }
 
@@ -41,15 +44,8 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
                   DialogService().showMessageDialog(context,
                       message: 'Harap masukkan nama activity!');
                 } else {
-                  DialogService().actionDialog(
-                    context,
-                    title: 'Buat Activity',
-                    message: 'Activity berhasil dibuat!',
-                    action: () async {
-                      await _viewModel.postActivity(context,
-                          judul: judul.text, isi: isi.text);
-                    },
-                  );
+                  await _viewModel.postActivity(context,
+                      judul: judul.text, isi: isi.text);
                 }
               },
               icon: const Icon(Icons.save))
@@ -77,8 +73,8 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
               height: 16,
             ),
             IngatkanTextField(
-              hint: 'Masukkan isi',
-              controller: isi,
+              hint: 'Masukkan kategori',
+              controller: kategori,
             ),
           ],
         ),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:ingatkan/core/error/error.dart';
 import 'package:ingatkan/core/global/profile_data.dart';
 import 'package:ingatkan/features/home/view/presentation/home_page.dart';
+import 'package:ingatkan/features/kategori/controller/kategori_remote_data_sources.dart';
 import 'package:ingatkan/services/dialog_service.dart';
 import 'package:ingatkan/services/navigator_service.dart';
 import 'package:mobx/mobx.dart';
@@ -16,6 +17,9 @@ abstract class ActivityViewModelBase with Store {
   final ActivityRemoteDataSources _dataSources =
       ActivityRemoteDataSourcesImpl();
   final DialogService _dialogService = DialogService();
+
+  final KategoriRemoteDataSources _dataKategori =
+      KategoriRemoteDataSourcesImpl();
 
   @observable
   var _activities = ObservableList<Activity>();
@@ -77,23 +81,65 @@ abstract class ActivityViewModelBase with Store {
 
   @action
   Future<void> putActivity(BuildContext context,
-      {String? judul, String? isi, String? idActivity}) async {
+      {String? judul,
+      String? isi,
+      String? idActivity,
+      String kategori = ''}) async {
     try {
       _isLoading.value = true;
-      var temp = await _dataSources.putActivity(
-        idActivity: idActivity,
-        judul: judul,
-        idPembuat: ProfileData.data.username,
-        isi: isi,
-        timestamp:
-            '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}',
-        categories: '',
-      );
-      _isLoading.value = false;
-      if (temp) {
-        NavigatorService.pushReplacement(context, route: const HomePage());
+
+      String tempKategori = kategori;
+      var tempKategoris = tempKategori.split(",");
+
+      var listIdKategori = [];
+
+      var notFound = false;
+
+      var tempData =
+          await _dataKategori.getKategori(username: ProfileData.data.username);
+
+      if (listIdKategori.isNotEmpty) {
+        for (int i = 0; i < tempKategoris.length; i++) {
+          for (int j = 0; j < tempData.length; j++) {
+            if (tempData[j].judul == tempKategoris[i]) {
+              listIdKategori.add(tempData[j].id);
+              break;
+            }
+            if (j == tempData.length - 1) {
+              notFound = true;
+            }
+          }
+        }
+      }
+
+      if (notFound) {
+        _dialogService.showMessageDialog(context,
+            message: "Create gagal karena nama kategori tidak terdaftar");
       } else {
-        _dialogService.networkError(context);
+        var temp = await _dataSources.putActivity(
+          idActivity: idActivity,
+          judul: judul,
+          idPembuat: ProfileData.data.username,
+          isi: isi,
+          timestamp:
+              '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}',
+          categories: listIdKategori.join("+"),
+        );
+
+        _isLoading.value = false;
+        if (temp) {
+          _dialogService.actionDialog(
+            context,
+            title: 'Buat Activity',
+            message: 'Activity berhasil dibuat!',
+            action: () async {
+              NavigatorService.pushReplacement(context,
+                  route: const HomePage());
+            },
+          );
+        } else {
+          _dialogService.networkError(context);
+        }
       }
     } catch (e) {
       _isLoading.value = false;
@@ -107,25 +153,56 @@ abstract class ActivityViewModelBase with Store {
     try {
       _isLoading.value = true;
 
-      String temp_kategori = kategori;
-      var temp_kategoris = temp_kategori.split(",");
+      String tempKategori = kategori;
+      var tempKategoris = tempKategori.split(",");
 
-      var list_id_kategori = [];
+      var listIdKategori = [];
 
-      for (int i = 0; i < temp_kategoris.length; i++) {}
-      var temp = await _dataSources.postActivity(
-        judul: judul,
-        idPembuat: ProfileData.data.username,
-        isi: isi,
-        timestamp:
-            '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}',
-        categories: '',
-      );
-      _isLoading.value = false;
-      if (temp) {
-        NavigatorService.pushReplacement(context, route: const HomePage());
+      var notFound = false;
+
+      var tempData =
+          await _dataKategori.getKategori(username: ProfileData.data.username);
+
+      if (listIdKategori.isNotEmpty) {
+        for (int i = 0; i < tempKategoris.length; i++) {
+          for (int j = 0; j < tempData.length; j++) {
+            if (tempData[j].judul == tempKategoris[i]) {
+              listIdKategori.add(tempData[j].id);
+              break;
+            }
+            if (j == tempData.length - 1) {
+              notFound = true;
+            }
+          }
+        }
+      }
+
+      if (notFound) {
+        _dialogService.showMessageDialog(context,
+            message: "Create gagal karena nama kategori tidak terdaftar");
       } else {
-        _dialogService.networkError(context);
+        var temp = await _dataSources.postActivity(
+          judul: judul,
+          idPembuat: ProfileData.data.username,
+          isi: isi,
+          timestamp:
+              '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}',
+          categories: listIdKategori.join("+"),
+        );
+        _isLoading.value = false;
+        if (temp) {
+          _dialogService.actionDialog(
+            context,
+            title: 'Buat Activity',
+            message: 'Activity berhasil dibuat!',
+            action: () async {
+              NavigatorService.pushReplacement(context,
+                  route: const HomePage());
+            },
+          );
+        } else {
+          _dialogService.networkError(context);
+        }
       }
     } catch (e) {
       _isLoading.value = false;
