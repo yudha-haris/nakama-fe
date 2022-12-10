@@ -73,6 +73,13 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
               hint: 'Masukkan isi',
               controller: isi,
             ),
+            const SizedBox(
+              height: 16,
+            ),
+            IngatkanTextField(
+              hint: 'Masukkan isi',
+              controller: isi,
+            ),
           ],
         ),
       ),

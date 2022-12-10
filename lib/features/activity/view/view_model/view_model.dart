@@ -103,9 +103,16 @@ abstract class ActivityViewModelBase with Store {
 
   @action
   Future<void> postActivity(BuildContext context,
-      {String? judul, String? isi}) async {
+      {String? judul, String? isi, String kategori = ''}) async {
     try {
       _isLoading.value = true;
+
+      String temp_kategori = kategori;
+      var temp_kategoris = temp_kategori.split(",");
+
+      var list_id_kategori = [];
+
+      for (int i = 0; i < temp_kategoris.length; i++) {}
       var temp = await _dataSources.postActivity(
         judul: judul,
         idPembuat: ProfileData.data.username,
