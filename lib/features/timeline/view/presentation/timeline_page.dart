@@ -81,31 +81,13 @@ class _TimelinePageState extends State<TimelinePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                    child: Expanded(child: Text(judul, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),)
-
-
-                                    )],
-                                ),
-                                // if(_viewModel.isLoading && _viewModel.timelines.isNotEmpty)
-                                //   Expanded(child: const Center(
-                                //     child: CircularProgressIndicator(),
-                                //   ),),
-
+                                Expanded(child: Text(judul, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),),
                               ],
                             ),
-
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(child: Text(isi, maxLines: 2,),),
-                                // if(_viewModel.isLoading && _viewModel.timelines.isNotEmpty)
-                                //   const Center(
-                                //     child: CircularProgressIndicator(),
-                                //   )
                               ],
                             ),
                           ],

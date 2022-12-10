@@ -32,16 +32,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ingatkan'),
+        title: Text('Ingatkan' + (!(ProfileData.data.isAdmin ?? false) ? '' : ' (admin)')),
         actions: <Widget>[
-          IconButton(onPressed: (){
-            NavigatorService.push(context, route: const HistoryPage());
-          }, icon: const Icon(Icons.history))
+          if(!(ProfileData.data.isAdmin ?? false))
+            IconButton(onPressed: (){
+              NavigatorService.push(context, route: const HistoryPage());
+            }, icon: const Icon(Icons.history))
         ],
       ),
       drawer: const HomePageDrawer(),
-      body: (ProfileData.data.isAdmin ?? false)
-        ? PageView(
+      body: !(ProfileData.data.isAdmin ?? false)
+          ? PageView(
         physics: const NeverScrollableScrollPhysics(),
         allowImplicitScrolling: false,
         controller: _controller,
@@ -49,13 +50,11 @@ class _HomePageState extends State<HomePage> {
           ActivitiesPage(),
           TimelinePage(),
         ],
-      )
-          : TimelinePage(),
-      bottomNavigationBar: (ProfileData.data.isAdmin ?? false)
-      ? HomePageBottomNavigationBar(
-        controller: _controller,
-      )
-      : null,
+      ) : const TimelinePage(),
+      bottomNavigationBar: !(ProfileData.data.isAdmin ?? false)
+          ? HomePageBottomNavigationBar(
+        controller: _controller,)
+          : const SizedBox(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
@@ -66,7 +65,9 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: !(ProfileData.data.isAdmin ?? false)
+          ? FloatingActionButtonLocation.centerDocked
+          : FloatingActionButtonLocation.endFloat,
     );
   }
 }
