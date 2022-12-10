@@ -23,7 +23,7 @@ class IngatkanTextField extends StatelessWidget {
           // TODO(Adeline): Edit Style
           border: Border.all(color: Colors.blueGrey, width: 1),
           borderRadius: BorderRadius.circular(10)),
-      width: 500,
+      width: double.infinity,
       child: TextField(
         controller: controller,
         obscureText: obscuredText,
