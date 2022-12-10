@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:ingatkan/core/constants/environment.dart';
 import 'package:ingatkan/core/error/error.dart';
@@ -47,7 +48,7 @@ class KategoriRemoteDataSourcesImpl implements KategoriRemoteDataSources {
     if (response.statusCode == 200) {
       return true;
     } else {
-      throw Error();
+      throw Error(message: response.body.toString());
     }
   }
 

@@ -102,10 +102,9 @@ mixin _$KategoriViewModel on KategoriViewModelBase, Store {
       AsyncAction('KategoriViewModelBase.addKategori', context: context);
 
   @override
-  Future<void> addKategori(BuildContext context,
-      {String? judul, String? idKategori}) {
-    return _$addKategoriAsyncAction.run(
-        () => super.addKategori(context, judul: judul, idKategori: idKategori));
+  Future<void> addKategori(BuildContext context, {String? judul}) {
+    return _$addKategoriAsyncAction
+        .run(() => super.addKategori(context, judul: judul));
   }
 
   late final _$deleteKategoriAsyncAction =
