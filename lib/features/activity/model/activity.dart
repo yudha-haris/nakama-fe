@@ -6,6 +6,8 @@ class Activity {
   final String? writer;
   final String? timeStamp;
   final bool? isFinish;
+  List<String>? categoryId;
+  final String? tempCategory;
 
   Activity({
     this.id,
@@ -14,6 +16,8 @@ class Activity {
     this.writer,
     this.timeStamp,
     this.isFinish,
+    this.categoryId,
+    this.tempCategory,
   });
 
   static Activity parseFromResponse(List<dynamic> data){
@@ -24,6 +28,7 @@ class Activity {
       writer: data[3].toString(),
       timeStamp: data[4] ?? '07/12/2022',
       isFinish: data[5] ?? false,
+      tempCategory: data[6] ?? '',
     );
   }
 

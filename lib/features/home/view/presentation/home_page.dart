@@ -7,6 +7,7 @@ import 'package:ingatkan/features/activity/view/presentation/activities_page.dar
 import 'package:ingatkan/features/activity/view/presentation/create_activity_page.dart';
 import 'package:ingatkan/features/activity/view/presentation/history_page.dart';
 import 'package:ingatkan/features/authentication/view/presentation/login_page.dart';
+import 'package:ingatkan/features/kategori/view/presentation/kategori_screen.dart';
 import 'package:ingatkan/features/profile/view/presentation/profile_page.dart';
 import 'package:ingatkan/features/profile/view/view_model/view_model.dart';
 import 'package:ingatkan/features/timeline/view/presentation/create_timeline_page.dart';
@@ -113,7 +114,7 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                         )))),
             const SizedBox(height: 16,),
             IngatkanButton(label: 'Kategori', onPressed: (){
-
+              NavigatorService.push(context, route: const KategoriScreen());
             }),
             const SizedBox(height: 16,),
 

@@ -125,9 +125,9 @@ mixin _$ActivityViewModel on ActivityViewModelBase, Store {
 
   @override
   Future<void> putActivity(BuildContext context,
-      {String? judul, String? isi, String? idActivity}) {
-    return _$putActivityAsyncAction.run(() => super
-        .putActivity(context, judul: judul, isi: isi, idActivity: idActivity));
+      {String? judul, String? isi, String? idActivity, String kategori = ''}) {
+    return _$putActivityAsyncAction.run(() => super.putActivity(context,
+        judul: judul, isi: isi, idActivity: idActivity, kategori: kategori));
   }
 
   late final _$postActivityAsyncAction =
@@ -135,9 +135,9 @@ mixin _$ActivityViewModel on ActivityViewModelBase, Store {
 
   @override
   Future<void> postActivity(BuildContext context,
-      {String? judul, String? isi}) {
-    return _$postActivityAsyncAction
-        .run(() => super.postActivity(context, judul: judul, isi: isi));
+      {String? judul, String? isi, String kategori = ''}) {
+    return _$postActivityAsyncAction.run(() => super
+        .postActivity(context, judul: judul, isi: isi, kategori: kategori));
   }
 
   late final _$deleteActivityAsyncAction =

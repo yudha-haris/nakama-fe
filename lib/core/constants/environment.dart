@@ -22,4 +22,11 @@ class Environment {
   static const putActivity = 'activities/update_activities_api';
   static const deleteActivity = 'activities/delete_activities_api';
   static const finishActivity = 'activities/finish_activities_api';
+
+  // Kategori
+  static const getAllKategori = 'kategori/read';
+  static const createKategori = 'kategori/create';
+  static const deleteKategori = 'kategori/delete';
+  static const updateKategori = 'kategori/update';
+
 }
