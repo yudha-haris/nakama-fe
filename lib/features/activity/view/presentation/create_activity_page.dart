@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import '../../../../core/widgets/ingatkan_textfield.dart';
 import '../../../../services/dialog_service.dart';
-import '../../model/activity.dart';
 import '../view_model/view_model.dart';
 
 class CreateActivityPage extends StatefulWidget {
@@ -38,7 +33,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Buat Activity'),
+        title: const Text('Buat Activity'),
         actions: [
           IconButton(
               onPressed: () async {
@@ -57,7 +52,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
                   );
                 }
               },
-              icon: Icon(Icons.save))
+              icon: const Icon(Icons.save))
         ],
       ),
       body: Padding(

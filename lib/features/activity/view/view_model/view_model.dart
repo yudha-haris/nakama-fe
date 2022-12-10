@@ -1,19 +1,13 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:ingatkan/core/error/error.dart';
 import 'package:ingatkan/core/global/profile_data.dart';
-import 'package:ingatkan/features/authentication/controller/authentication_remote_data_sources.dart';
-import 'package:ingatkan/features/authentication/view/presentation/login_page.dart';
 import 'package:ingatkan/features/home/view/presentation/home_page.dart';
 import 'package:ingatkan/services/dialog_service.dart';
 import 'package:ingatkan/services/navigator_service.dart';
 import 'package:mobx/mobx.dart';
-
 import '../../controller/activity_remote_data_sources.dart';
 import '../../model/activity.dart';
-
 part 'view_model.g.dart';
 
 class ActivityViewModel = ActivityViewModelBase with _$ActivityViewModel;
@@ -97,7 +91,7 @@ abstract class ActivityViewModelBase with Store {
       );
       _isLoading.value = false;
       if (temp) {
-        NavigatorService.pushReplacement(context, route: HomePage());
+        NavigatorService.pushReplacement(context, route: const HomePage());
       } else {
         _dialogService.networkError(context);
       }
@@ -122,7 +116,7 @@ abstract class ActivityViewModelBase with Store {
       );
       _isLoading.value = false;
       if (temp) {
-        NavigatorService.pushReplacement(context, route: HomePage());
+        NavigatorService.pushReplacement(context, route: const HomePage());
       } else {
         _dialogService.networkError(context);
       }
@@ -142,7 +136,7 @@ abstract class ActivityViewModelBase with Store {
       );
       _isLoading.value = false;
       if (temp) {
-        NavigatorService.pushReplacement(context, route: HomePage());
+        NavigatorService.pushReplacement(context, route: const HomePage());
       } else {
         _dialogService.networkError(context);
       }
@@ -164,7 +158,7 @@ abstract class ActivityViewModelBase with Store {
       );
       _isLoading.value = false;
       if (temp) {
-        NavigatorService.pushReplacement(context, route: HomePage());
+        NavigatorService.pushReplacement(context, route: const HomePage());
       } else {
         _dialogService.networkError(context);
       }
