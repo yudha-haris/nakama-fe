@@ -41,7 +41,6 @@ class _UpdateActivityPageState extends State<UpdateActivityPage> {
     } else if(widget.activity.categoryId!.isEmpty){
       return '';
     }
-    print(widget.activity.categoryId.toString());
     return (widget.activity.categoryId.toString().substring(1, (widget.activity.categoryId?.toString().length ?? 3) -1)).replaceAll(' ', '');
   }
 
@@ -57,16 +56,11 @@ class _UpdateActivityPageState extends State<UpdateActivityPage> {
                   DialogService().showMessageDialog(context,
                       message: 'Harap masukkan nama activity!');
                 } else {
-                  DialogService().actionDialog(
-                    context,
-                    title: 'Ubah Activity',
-                    message: 'Activity berhasil diubah!',
-                    action: () async {
-                      await _viewModel.putActivity(context,
-                          judul: judul.text,
-                          isi: isi.text,
-                          idActivity: widget.activity.id);
-                    },
+                  await _viewModel.putActivity(context,
+                      judul: judul.text,
+                      isi: isi.text,
+                      idActivity: widget.activity.id,
+                      kategori: kategories()
                   );
                 }
               },

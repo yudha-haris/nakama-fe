@@ -89,6 +89,11 @@ abstract class ActivityViewModelBase with Store {
           log('================');
           log(categories.toString());
           tempID = temp[i].id ?? '';
+          if(i == temp.length - 1){
+            real.categoryId = categories;
+
+            tempActivity.add(real);
+          }
 
         } else {
 
@@ -137,17 +142,18 @@ abstract class ActivityViewModelBase with Store {
 
       var listIdKategori = [];
 
-      var notFound = true;
+      var notFound = false;
 
-      var tempData =
-          await _dataKategori.getKategori(username: ProfileData.data.username);
+      List<Kategori> tempData =
+      await _dataKategori.getKategori(username: ProfileData.data.username);
 
       log('tempData: ');
       log(tempData.toString());
 
       log('tempKategoris: ');
       log(tempKategoris.toString());
-      if (listIdKategori.isNotEmpty) {
+
+      if (tempKategoris.isNotEmpty) {
         for (int i = 0; i < tempKategoris.length; i++) {
           for (int j = 0; j < tempData.length; j++) {
             if (tempData[j].judul == tempKategoris[i]) {
@@ -161,9 +167,13 @@ abstract class ActivityViewModelBase with Store {
         }
       }
 
+      log('listIdKategori: ');
+      log(listIdKategori.toString());
+
+
       if (notFound) {
-        // _dialogService.showMessageDialog(context,
-        //     message: "Create gagal karena nama kategori tidak terdaftar");
+        _dialogService.showMessageDialog(context,
+            message: "Update gagal karena nama kategori tidak terdaftar");
       } else {
         var temp = await _dataSources.putActivity(
           idActivity: idActivity,
