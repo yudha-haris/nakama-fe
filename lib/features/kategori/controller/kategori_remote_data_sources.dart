@@ -29,7 +29,7 @@ abstract class KategoriRemoteDataSources {
       });
 }
 
-class AuthenticationRemoteDataSourcesImpl implements KategoriRemoteDataSources {
+class KategoriRemoteDataSourcesImpl implements KategoriRemoteDataSources {
   @override
   Future<bool> addKategori({
     String? idKategori,
