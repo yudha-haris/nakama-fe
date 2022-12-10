@@ -177,6 +177,8 @@ abstract class ActivityViewModelBase with Store {
         }
       }
 
+      log(listIdKategori.toString());
+
       if (notFound) {
         _dialogService.showMessageDialog(context,
             message: "Create gagal karena nama kategori tidak terdaftar");
