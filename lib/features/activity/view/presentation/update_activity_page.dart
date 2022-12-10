@@ -60,7 +60,7 @@ class _UpdateActivityPageState extends State<UpdateActivityPage> {
                       judul: judul.text,
                       isi: isi.text,
                       idActivity: widget.activity.id,
-                      kategori: kategories()
+                      kategori: kategori.text
                   );
                 }
               },

@@ -170,7 +170,6 @@ abstract class ActivityViewModelBase with Store {
       log('listIdKategori: ');
       log(listIdKategori.toString());
 
-
       if (notFound) {
         _dialogService.showMessageDialog(context,
             message: "Update gagal karena nama kategori tidak terdaftar");
