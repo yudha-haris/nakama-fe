@@ -1,36 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:ingatkan/features/authentication/view/presentation/login_page.dart';
+import 'package:provider/provider.dart';
+
+import 'core/global/global_state.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+      providers: [
+        Provider<GlobalState>(
+          create: (_) => GlobalState(),
+        )
+      ],
+      child: const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final GlobalState _globalState = GlobalState();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        /* light theme settings */
-      ),
-      darkTheme: ThemeData(
-        // TODO(Adeline): edit style
-        brightness: Brightness.dark,
-        // TODO(Adeline): Edit Style
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.deepPurple,
-          )
+    return Observer(
+      builder: (context){
+      return MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          brightness: Brightness.light,
+          /* light theme settings */
+          primaryColor: Color.fromARGB(255, 247, 77, 94),
+          appBarTheme: AppBarTheme(
+            color: Color.fromARGB(255, 247, 77, 94),
+          ),
+          accentColor: Color.fromARGB(255, 252, 123, 77),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(255, 252, 123, 77),
+              )),
         ),
-        /* dark theme settings */
-      ),
-      // TODO(All): Kalau mau liat lightmode sama darkmode ganti di bawah
-      themeMode: ThemeMode.dark,
-      home: const LoginPage(),
-    );
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          /* dark theme settings */
+          primaryColor: Color.fromARGB(255, 120, 134, 238),
+          appBarTheme: AppBarTheme(
+            color: Color.fromARGB(255, 120, 134, 238), //<-- SEE HERE
+          ),
+          accentColor: Color.fromRGBO(179, 106, 251, 1),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromRGBO(179, 106, 251, 1),
+              )),
+        ),
+        // TODO(All): Kalau mau liat lightmode sama darkmode ganti di bawah
+        themeMode: context
+            .watch<GlobalState>()
+            .themeMode,
+        home: const LoginPage(),
+      );
+    });
   }
 }

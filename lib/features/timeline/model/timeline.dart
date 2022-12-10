@@ -20,7 +20,7 @@ class Timeline {
       judul: data[1].toString(),
       isi: data[2].toString(),
       writer: data[3].toString(),
-      timeStamp: data[4] ?? '07/12/2022',
+      timeStamp: data[4].toString(),
     );
   }
 

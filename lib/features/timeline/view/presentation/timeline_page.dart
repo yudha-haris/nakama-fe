@@ -74,23 +74,20 @@ class _TimelinePageState extends State<TimelinePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(writer),
-                                Text(timeStamp),
+                                Text("Writer : " + writer),
+                                Text("Date : " + timeStamp),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  children: [
-                                    Text(judul),
-                                    Text(isi),
-                                  ],
-                                ),
-                                if(_viewModel.isLoading && _viewModel.timelines.isNotEmpty)
-                                  const Center(
-                                    child: CircularProgressIndicator(),
-                                  )
+                                Expanded(child: Text(judul, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(child: Text(isi, maxLines: 2,),),
                               ],
                             ),
                           ],

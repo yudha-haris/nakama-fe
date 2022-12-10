@@ -6,6 +6,7 @@ class Environment {
 
   // Profile
   static const editProfileUrl = 'profile/edit-profile';
+  static const editTheme = 'profile/edit-theme';
 
   // Timeline
   static const getAllTimelines = 'timeline/';

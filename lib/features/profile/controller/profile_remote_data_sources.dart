@@ -9,6 +9,7 @@ import 'package:ingatkan/features/authentication/model/profile.dart';
 
 abstract class ProfileRemoteDataSources {
   Future<Profile> editProfile({String? username, String? password, String? name, String? phone, String? email});
+  Future<void> editTheme({String? id = '0', String? username});
 }
 
 class ProfileRemoteDataSourcesImpl implements ProfileRemoteDataSources {
@@ -22,9 +23,7 @@ class ProfileRemoteDataSourcesImpl implements ProfileRemoteDataSources {
           'phone_number': phone ?? '',
           'name': name ?? '',
         }).timeout(const Duration(seconds: 10));
-    log('============================');
-    log(response.body.toString());
-    log(response.statusCode.toString());
+
     if(response.statusCode == 200){
       log('status kode 200');
       var url = Uri.https(Environment.baseUrl, Environment.loginUrl);
@@ -39,5 +38,14 @@ class ProfileRemoteDataSourcesImpl implements ProfileRemoteDataSources {
     }
 
   }
-  
+
+  @override
+  Future<void> editTheme({String? id = '0', String? username}) async {
+    var url = Uri.https(Environment.baseUrl, Environment.editTheme);
+    var response = await http.post(url,
+        body: {'username': username ?? '',
+          'theme': id,
+        }).timeout(const Duration(seconds: 10));
+    log(response.body.toString());
+  }
 }
