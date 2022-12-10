@@ -14,7 +14,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _username = TextEditingController(text: 'nakama_user');
+  final TextEditingController _username =
+      TextEditingController(text: 'nakama_user');
   final TextEditingController _password = TextEditingController(text: 'nakama');
   final AuthenticationViewModel _viewModel = AuthenticationViewModel();
 
@@ -25,39 +26,77 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login Page'),
+        centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 24
-        ),
-        child: Column(
-          children: [
-            const Text('Username: '),
-            const SizedBox(height: 16,),
-            IngatkanTextField(controller: _username, hint: 'Masukkan Username'),
-            const SizedBox(height: 16,),
-            const Text('Password: '),
-            const SizedBox(height: 16,),
-            IngatkanTextField(controller: _password, hint: 'Masukkan Password', obscuredText: true,),
-            const SizedBox(height: 48,),
-            Observer(
-              builder: (context) {
-                return IngatkanButton(
-                    isLoading: _viewModel.isLoading,
-                    label: 'Login',
-                    onPressed: (){
-                      _viewModel.login(context, username: _username.text, password: _password.text);});
-              }
-            ),
-            const SizedBox(height: 16,),
-            IngatkanButton(label: 'Register', onPressed: (){NavigatorService.push(context, route: const RegisterPage()); })
-          ],
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Center(
+          child: Column(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const Text('Username: '),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  IngatkanTextField(
+                      prefixIcon: const Icon(Icons.alternate_email_rounded),
+                      controller: _username,
+                      hint: 'Masukkan Username'),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const Text('Password: '),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  IngatkanTextField(
+                    prefixIcon: const Icon(Icons.lock_rounded),
+                    controller: _password,
+                    hint: 'Masukkan Password',
+                    obscuredText: true,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 48,
+              ),
+              Center(
+                child: Column(
+                  children: [
+                    Observer(builder: (context) {
+                      return IngatkanButton(
+                          isLoading: _viewModel.isLoading,
+                          label: 'Login',
+                          onPressed: () {
+                            _viewModel.login(context,
+                                username: _username.text,
+                                password: _password.text);
+                          });
+                    }),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    IngatkanButton(
+                        label: 'Register',
+                        onPressed: () {
+                          NavigatorService.push(context,
+                              route: const RegisterPage());
+                        })
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -154,7 +154,7 @@ class _HomePageBottomNavigationBarState extends State<HomePageBottomNavigationBa
     return SizedBox(
       height: 64,
       child: BottomAppBar(
-        color: Colors.blueAccent,
+        color: Theme.of(context).primaryColor,
         shape: const CircularNotchedRectangle(),
         notchMargin: 5.0,
         child: Row(
@@ -164,7 +164,9 @@ class _HomePageBottomNavigationBarState extends State<HomePageBottomNavigationBa
             HomeBottomNavBarItem(
                 onTap: (){
                   setState(() {
-                    widget.controller.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                    widget.controller.animateToPage(0,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeIn);
                     pageIndex = 0;
                   });
                 },
@@ -174,7 +176,9 @@ class _HomePageBottomNavigationBarState extends State<HomePageBottomNavigationBa
             HomeBottomNavBarItem(
                 onTap: (){
                   setState(() {
-                    widget.controller.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                    widget.controller.animateToPage(1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeIn);
                     pageIndex = 1;
                   });
                 },
@@ -205,7 +209,7 @@ class HomeBottomNavBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: (){
+        onTap: () {
           onTap.call();
         },
         child: Column(
@@ -215,16 +219,23 @@ class HomeBottomNavBarItem extends StatelessWidget {
               height: 4,
               color: isSelected ? Colors.lightBlueAccent : Colors.transparent,
             ),
-            Expanded(child:
-            Column(
+            Expanded(
+                child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(icon, color: Colors.white),
-                const SizedBox(height: 4,),
-                Text(label, style: const TextStyle(color: Colors.white),)
-              ],))
-
-          ],),),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  label,
+                  style: const TextStyle(color: Colors.white),
+                )
+              ],
+            ))
+          ],
+        ),
+      ),
     );
   }
 }

@@ -19,7 +19,6 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,21 +26,37 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const Text('Profile Page'),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 24
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 24,),
-            ProfileLabelWidget(label: 'Username', content: _viewModel.profile.username ?? ''),
-            ProfileLabelWidget(label: 'Email', content: _viewModel.profile.email ?? ''),
-            ProfileLabelWidget(label: 'Nama', content: _viewModel.profile.name ?? ''),
-            ProfileLabelWidget(label: 'Nomor Telepon', content: _viewModel.profile.phoneNumber ?? ''),
+            const SizedBox(
+              height: 24,
+            ),
+            ProfileLabelWidget(
+                label: 'Username', content: _viewModel.profile.username ?? ''),
+            ProfileLabelWidget(
+                label: 'Email', content: _viewModel.profile.email ?? ''),
+            ProfileLabelWidget(
+                label: 'Nama', content: _viewModel.profile.name ?? ''),
+            ProfileLabelWidget(
+                label: 'Nomor Telepon',
+                content: _viewModel.profile.phoneNumber ?? ''),
             const Spacer(),
-            IngatkanButton(label: 'Edit Profile', onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfilePage()));
-            }),
+            Center(
+              child: Column(
+                children: [
+                  IngatkanButton(
+                      label: 'Edit Profile',
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const EditProfilePage()));
+                      }),
+                ],
+              ),
+            ),
             const Spacer(),
           ],
         ),
@@ -53,7 +68,9 @@ class _ProfilePageState extends State<ProfilePage> {
 class ProfileLabelWidget extends StatelessWidget {
   final String label;
   final String content;
-  const ProfileLabelWidget({Key? key, required this.label, required this.content}) : super(key: key);
+  const ProfileLabelWidget(
+      {Key? key, required this.label, required this.content})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +79,24 @@ class ProfileLabelWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(label, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-          const Divider(thickness: 1, height: 8,),
-          const SizedBox(height: 4,),
-          Text(content, style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 16),),
-          const SizedBox(height: 8,),
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          const Divider(
+            thickness: 1,
+            height: 8,
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Text(
+            content,
+            style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
         ],
       ),
     );
