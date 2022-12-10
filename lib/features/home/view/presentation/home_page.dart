@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:ingatkan/core/global/global_state.dart';
 import 'package:ingatkan/core/global/profile_data.dart';
 import 'package:ingatkan/core/widgets/ingatkan_button.dart';
 import 'package:ingatkan/features/activity/view/presentation/activities_page.dart';
@@ -9,6 +11,7 @@ import 'package:ingatkan/features/profile/view/presentation/profile_page.dart';
 import 'package:ingatkan/features/timeline/view/presentation/create_timeline_page.dart';
 import 'package:ingatkan/features/timeline/view/presentation/timeline_page.dart';
 import 'package:ingatkan/services/navigator_service.dart';
+import 'package:provider/provider.dart';
 
 import '../../../authentication/model/profile.dart';
 
@@ -72,8 +75,15 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class HomePageDrawer extends StatelessWidget {
+class HomePageDrawer extends StatefulWidget {
   const HomePageDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<HomePageDrawer> createState() => _HomePageDrawerState();
+}
+
+class _HomePageDrawerState extends State<HomePageDrawer> {
+  final GlobalState _globalState = GlobalState();
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +114,16 @@ class HomePageDrawer extends StatelessWidget {
             IngatkanButton(label: 'Kategori', onPressed: (){
 
             }),
+            const SizedBox(height: 16,),
+
+            const Text('Ganti Tema'),
+            Observer(
+              builder: (context) {
+                return Switch(value: context.read<GlobalState>().themeMode == ThemeMode.light, onChanged: (value) async {
+                  context.read<GlobalState>().switchTheme();
+                });
+              }
+            ),
             const Spacer(),
             IngatkanButton(
                 label: 'Keluar', onPressed: (){
