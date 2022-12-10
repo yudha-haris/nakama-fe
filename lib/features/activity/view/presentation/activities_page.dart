@@ -89,17 +89,35 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                                   IconButton(
                                       onPressed: () {
                                         // tambah konfirmasi popup
-                                        _viewModel.finishActivity(context,
-                                            idActivity: _viewModel
-                                                .activities[index].id);
+                                        DialogService().actionOrCancelDialog(
+                                          context,
+                                          title: 'Selesaikan Activity',
+                                          message:
+                                              'Apakah anda yakin untuk menyelesaikan activity ${_viewModel.activities[index].judul}?',
+                                          action: () async {
+                                            await _viewModel.finishActivity(
+                                                context,
+                                                idActivity: _viewModel
+                                                    .activities[index].id);
+                                          },
+                                        );
                                       },
                                       icon: Icon(Icons.check)),
                                   IconButton(
                                       onPressed: () {
                                         // tambah konfirmasi popup
-                                        _viewModel.deleteActivity(context,
-                                            idActivity: _viewModel
-                                                .activities[index].id);
+                                        DialogService().actionOrCancelDialog(
+                                          context,
+                                          title: 'Hapus Activity',
+                                          message:
+                                              'Apakah anda yakin untuk mengapus ${_viewModel.activities[index].judul}?',
+                                          action: () async {
+                                            await _viewModel.deleteActivity(
+                                                context,
+                                                idActivity: _viewModel
+                                                    .activities[index].id);
+                                          },
+                                        );
                                       },
                                       icon: Icon(Icons.delete))
                                 ],

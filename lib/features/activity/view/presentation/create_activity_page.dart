@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import '../../../../core/widgets/ingatkan_textfield.dart';
+import '../../../../services/dialog_service.dart';
 import '../../model/activity.dart';
 import '../view_model/view_model.dart';
 
@@ -37,12 +38,24 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Activity'),
+        title: Text('Buat Activity'),
         actions: [
           IconButton(
               onPressed: () async {
-                await _viewModel.postActivity(context,
-                    judul: judul.text, isi: isi.text);
+                if (judul.text.isEmpty) {
+                  DialogService().showMessageDialog(context,
+                      message: 'Harap masukkan nama activity!');
+                } else {
+                  DialogService().actionDialog(
+                    context,
+                    title: 'Buat Activity',
+                    message: 'Activity berhasil dibuat!',
+                    action: () async {
+                      await _viewModel.postActivity(context,
+                          judul: judul.text, isi: isi.text);
+                    },
+                  );
+                }
               },
               icon: Icon(Icons.save))
         ],
@@ -51,12 +64,16 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             IngatkanTextField(
               hint: 'Masukkan judul',
               controller: judul,
             ),
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             IngatkanTextField(
               hint: 'Masukkan isi',
               controller: isi,

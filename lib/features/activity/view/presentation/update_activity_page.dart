@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import '../../../../core/widgets/ingatkan_textfield.dart';
+import '../../../../services/dialog_service.dart';
 import '../../model/activity.dart';
 import '../view_model/view_model.dart';
 
@@ -39,14 +40,26 @@ class _UpdateActivityPageState extends State<UpdateActivityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Activity'),
+        title: const Text('Ubah Activity'),
         actions: [
           IconButton(
               onPressed: () async {
-                await _viewModel.putActivity(context,
-                    judul: judul.text,
-                    isi: isi.text,
-                    idActivity: widget.activity.id);
+                if (judul.text.isEmpty) {
+                  DialogService().showMessageDialog(context,
+                      message: 'Harap masukkan nama activity!');
+                } else {
+                  DialogService().actionDialog(
+                    context,
+                    title: 'Ubah Activity',
+                    message: 'Activity berhasil diubah!',
+                    action: () async {
+                      await _viewModel.putActivity(context,
+                          judul: judul.text,
+                          isi: isi.text,
+                          idActivity: widget.activity.id);
+                    },
+                  );
+                }
               },
               icon: const Icon(Icons.save))
         ],
@@ -55,12 +68,16 @@ class _UpdateActivityPageState extends State<UpdateActivityPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             IngatkanTextField(
               hint: 'Masukkan judul',
               controller: judul,
             ),
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             IngatkanTextField(
               hint: 'Masukkan isi',
               controller: isi,
