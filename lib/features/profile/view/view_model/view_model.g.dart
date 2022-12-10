@@ -76,6 +76,16 @@ mixin _$ProfileViewModel on ProfileViewModelBase, Store {
         phone: phone));
   }
 
+  late final _$switchThemeAsyncAction =
+      AsyncAction('ProfileViewModelBase.switchTheme', context: context);
+
+  @override
+  Future<void> switchTheme(BuildContext context,
+      {required ThemeMode themeData}) {
+    return _$switchThemeAsyncAction
+        .run(() => super.switchTheme(context, themeData: themeData));
+  }
+
   @override
   String toString() {
     return '''

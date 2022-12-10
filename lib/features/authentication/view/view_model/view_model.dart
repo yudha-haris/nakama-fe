@@ -10,7 +10,9 @@ import 'package:ingatkan/features/home/view/presentation/home_page.dart';
 import 'package:ingatkan/services/dialog_service.dart';
 import 'package:ingatkan/services/navigator_service.dart';
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../core/global/global_state.dart';
 import '../../model/profile.dart';
 
 part 'view_model.g.dart';
@@ -37,6 +39,11 @@ abstract class AuthenticationViewModelBase with Store {
       _profile.value = temp;
       ProfileData.data = temp;
       _isLoading.value = false;
+      if(temp.theme == '0'){
+        context.read<GlobalState>().switchTheme(id: '0');
+      } else {
+        context.read<GlobalState>().switchTheme(id: '1');
+      }
       NavigatorService.pushReplacement(context, route: const HomePage());
     } catch (e){
       _isLoading.value = false;

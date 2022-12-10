@@ -46,32 +46,34 @@ class _SingleTimelinePageState extends State<SingleTimelinePage> {
       ),
       body: Observer(
         builder: (context) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0, right: 20.0, left : 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Writer : " + (widget.timeline.writer ?? '')),
-                    Text("Date : " + (widget.timeline.timeStamp ?? DateTime.now().toString())),
-                  ],
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 20.0, bottom: 20.0, right: 20.0, left : 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Writer : " + (widget.timeline.writer ?? '')),
+                      Text("Date : " + (widget.timeline.timeStamp ?? DateTime.now().toString())),
+                    ],
+                  ),
+
                 ),
+                Padding(
+                  padding: EdgeInsets.only(right: 20.0, left : 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(child: Text(widget.timeline.isi ?? '', style: const TextStyle(fontSize: 16)),),
 
-              ),
-              Padding(
-                padding: EdgeInsets.only(right: 20.0, left : 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(child: Text(widget.timeline.isi ?? '', style: const TextStyle(fontSize: 16)),),
+                    ],
+                  ),
 
-                  ],
                 ),
-
-              ),
-            ],
+              ],
+            ),
           );
         }
       ),

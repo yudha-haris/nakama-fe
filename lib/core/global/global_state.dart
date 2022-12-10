@@ -16,12 +16,21 @@ abstract class GlobalStateBase with Store {
   var _isLoading = Observable<bool>(false);
 
   @action
-  Future<void> switchTheme() async {
-    if(_themeMode.value == ThemeMode.light){
-      _themeMode.value = ThemeMode.dark;
+  Future<void> switchTheme({String? id}) async {
+    if(id == null){
+      if(_themeMode.value == ThemeMode.light){
+        _themeMode.value = ThemeMode.dark;
+      } else {
+        _themeMode.value = ThemeMode.light;
+      }
     } else {
-      _themeMode.value = ThemeMode.light;
+      if(id == '1'){
+        _themeMode.value = ThemeMode.dark;
+      } else {
+        _themeMode.value = ThemeMode.light;
+      }
     }
+
   }
 
   @computed

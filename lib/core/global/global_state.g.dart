@@ -60,8 +60,8 @@ mixin _$GlobalState on GlobalStateBase, Store {
       AsyncAction('GlobalStateBase.switchTheme', context: context);
 
   @override
-  Future<void> switchTheme() {
-    return _$switchThemeAsyncAction.run(() => super.switchTheme());
+  Future<void> switchTheme({String? id}) {
+    return _$switchThemeAsyncAction.run(() => super.switchTheme(id: id));
   }
 
   @override

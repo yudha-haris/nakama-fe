@@ -40,6 +40,7 @@ class _EditTimelinePageState extends State<EditTimelinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
         actions: [

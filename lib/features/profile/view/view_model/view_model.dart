@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ingatkan/core/global/profile_data.dart';
 import 'package:ingatkan/features/profile/view/presentation/profile_page.dart';
 import 'package:ingatkan/services/dialog_service.dart';
@@ -54,6 +55,13 @@ abstract class ProfileViewModelBase with Store {
       }
     }
   }
+
+  @action
+  Future<void> switchTheme(BuildContext context, {required ThemeMode themeData}) async {
+    String id = themeData == ThemeMode.dark ? '1' : '0';
+    _dataSources.editTheme(id: id, username: ProfileData.data.username);
+
+}
 
   @computed
   Profile get profile => _profile.value;
