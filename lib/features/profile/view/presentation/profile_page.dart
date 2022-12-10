@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ingatkan/core/widgets/ingatkan_button.dart';
 import 'package:ingatkan/features/profile/view/presentation/edit_profile.dart';
 
 import '../view_model/view_model.dart';
@@ -18,7 +19,6 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,22 +26,38 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const Text('Profile Page'),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 24
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProfileLabelWidget(label: 'Username', content: _viewModel.profile.username ?? ''),
-            ProfileLabelWidget(label: 'Email', content: _viewModel.profile.email ?? ''),
-            ProfileLabelWidget(label: 'Nama', content: _viewModel.profile.name ?? ''),
-            ProfileLabelWidget(label: 'Nomor Telepon', content: _viewModel.profile.phoneNumber ?? ''),
-            ProfileLabelWidget(label: 'Is Admin', content: _viewModel.profile.isAdmin.toString() ?? ''),
-            ElevatedButton(
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfilePage()));
-            }, child: const Center(
-              child: Text('Edit Profile'),
-            ))
+            const SizedBox(
+              height: 24,
+            ),
+            ProfileLabelWidget(
+                label: 'Username', content: _viewModel.profile.username ?? ''),
+            ProfileLabelWidget(
+                label: 'Email', content: _viewModel.profile.email ?? ''),
+            ProfileLabelWidget(
+                label: 'Nama', content: _viewModel.profile.name ?? ''),
+            ProfileLabelWidget(
+                label: 'Nomor Telepon',
+                content: _viewModel.profile.phoneNumber ?? ''),
+            const Spacer(),
+            Center(
+              child: Column(
+                children: [
+                  IngatkanButton(
+                      label: 'Edit Profile',
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const EditProfilePage()));
+                      }),
+                ],
+              ),
+            ),
+            const Spacer(),
           ],
         ),
       ),
@@ -52,17 +68,35 @@ class _ProfilePageState extends State<ProfilePage> {
 class ProfileLabelWidget extends StatelessWidget {
   final String label;
   final String content;
-  const ProfileLabelWidget({Key? key, required this.label, required this.content}) : super(key: key);
+  const ProfileLabelWidget(
+      {Key? key, required this.label, required this.content})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(label),
-          const SizedBox(width: 16),
-          Text(content),
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          const Divider(
+            thickness: 1,
+            height: 8,
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Text(
+            content,
+            style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
         ],
       ),
     );

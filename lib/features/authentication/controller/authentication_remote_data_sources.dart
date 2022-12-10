@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:ingatkan/core/constants/environment.dart';
@@ -24,15 +25,17 @@ class AuthenticationRemoteDataSourcesImpl implements AuthenticationRemoteDataSou
 
   @override
   Future<bool> register({String? username, String? password, String? name, String? phone, String? email}) async {
-    var url = Uri.http(Environment.baseUrl, Environment.loginUrl);
+    var url = Uri.https(Environment.baseUrl, Environment.registerUrl);
     var response = await http.post(url,
         body: {'username': username ?? '',
           'password': password ?? '',
           'email': email ?? '',
           'phone_number': phone ?? '',
           'name': name ?? '',
-          'theme': false,
+          'theme': "0",
         }).timeout(const Duration(seconds: 10));
+    log('============================');
+    log(response.body.toString());
     if(response.statusCode == 401){
       throw Error(statusCode: response.statusCode, message: "Username sudah tersedia");
     } else if(response.statusCode == 200){

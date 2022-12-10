@@ -48,38 +48,49 @@ class _TimelinePageState extends State<TimelinePage> {
                     String isi = _viewModel.timelines[index].isi ?? '';
                     String timeStamp = _viewModel.timelines[index].timeStamp ?? '';
                     String writer = _viewModel.timelines[index].writer ?? '';
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.circular(20)
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16,
+                    return InkWell(
+                      onTap: () async {
+                        await _viewModel.getTimeline(context, id: _viewModel.timelines[index].id);
+                        if(!_viewModel.isLoading){
+                          NavigatorService.push(context, route: SingleTimelinePage(timeline: _viewModel.timeline,));
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 1),
+                          borderRadius: BorderRadius.circular(20)
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 16
+                        ),
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 8,
                           horizontal: 16
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 16
-                      ),
-                      child: GestureDetector(
-                        onTap: () async {
-                          await _viewModel.getTimeline(context, id: _viewModel.timelines[index].id);
-                          NavigatorService.push(context, route: const SingleTimelinePage());
-                        },
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(writer),
-                                Text(timeStamp),
+                                Text("Writer : " + writer),
+                                Text("Date : " + timeStamp),
                               ],
                             ),
-                            Text(judul),
-                            Text(isi),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(child: Text(judul, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(child: Text(isi, maxLines: 2,),),
+                              ],
+                            ),
                           ],
-
                         ),
                       ),
                     );
