@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ingatkan/core/global/profile_data.dart';
+import 'package:ingatkan/core/widgets/ingatkan_button.dart';
 import 'package:ingatkan/features/activity/view/presentation/activities_page.dart';
 import 'package:ingatkan/features/activity/view/presentation/create_activity_page.dart';
 import 'package:ingatkan/features/activity/view/presentation/history_page.dart';
 import 'package:ingatkan/features/authentication/view/presentation/login_page.dart';
+import 'package:ingatkan/features/profile/view/presentation/profile_page.dart';
 import 'package:ingatkan/features/timeline/view/presentation/create_timeline_page.dart';
 import 'package:ingatkan/features/timeline/view/presentation/timeline_page.dart';
 import 'package:ingatkan/services/navigator_service.dart';
@@ -75,16 +77,34 @@ class HomePageDrawer extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 16,),
-            Text(ProfileData.data.username ?? 'Pengguna'),
+            InkWell(
+                onTap: (){
+                  NavigatorService.push(context, route: const ProfilePage());
+                },
+                child: SizedBox(
+                    width: double.infinity,
+                    child: Center(
+                        child: Column(
+                          children: [
+                            const CircleAvatar(
+                              child: Icon(Icons.person),
+                            ),
+                            const SizedBox(height: 8,),
+                            Text(ProfileData.data.username ?? 'Pengguna',
+                            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                            ),
+                          ],
+                        )))),
             const SizedBox(height: 16,),
-            ElevatedButton(onPressed: (){
-              // move to kategori page
-            }, child: const Center(child: Text('Kategori'),)),
+            IngatkanButton(label: 'Kategori', onPressed: (){
+
+            }),
             const Spacer(),
-            ElevatedButton(onPressed: (){
-              ProfileData.data = Profile();
-              NavigatorService.pushReplacement(context, route: const LoginPage());
-            }, child: const Center(child: Text('Keluar'),)),
+            IngatkanButton(
+                label: 'Keluar', onPressed: (){
+                  ProfileData.data = Profile();
+                  NavigatorService.pushReplacement(context, route: const LoginPage());
+            }),
             const SizedBox(height: 16,),
           ],
         ),

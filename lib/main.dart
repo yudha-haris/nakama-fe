@@ -14,8 +14,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        /* light theme settings */
       ),
+      darkTheme: ThemeData(
+        // TODO(Adeline): edit style
+        brightness: Brightness.dark,
+        // TODO(Adeline): Edit Style
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.deepPurple,
+          )
+        ),
+        /* dark theme settings */
+      ),
+      // TODO(All): Kalau mau liat lightmode sama darkmode ganti di bawah
+      themeMode: ThemeMode.dark,
       home: const LoginPage(),
     );
   }

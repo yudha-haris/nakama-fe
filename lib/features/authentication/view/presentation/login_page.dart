@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ingatkan/core/widgets/ingatkan_button.dart';
+import 'package:ingatkan/core/widgets/ingatkan_textfield.dart';
 import 'package:ingatkan/features/authentication/view/presentation/register_page.dart';
 import 'package:ingatkan/features/authentication/view/view_model/view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -38,57 +40,23 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             const Text('Username: '),
             const SizedBox(height: 16,),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 1)
-              ),
-              height: 50,
-              width: double.infinity,
-              child: TextField(
-                controller: _username,
-                decoration: const InputDecoration(
-                  hintText: 'Masukkan Username'
-                ),
-              ),
-            ),
+            IngatkanTextField(controller: _username, hint: 'Masukkan Username'),
             const SizedBox(height: 16,),
             const Text('Password: '),
             const SizedBox(height: 16,),
-            Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1)
-              ),
-              height: 50,
-              width: double.infinity,
-              child: TextField(
-                controller: _password,
-                obscureText: true,
-                decoration: const InputDecoration(
-                    hintText: 'Masukkan Password'
-                ),
-              ),
-            ),
+            IngatkanTextField(controller: _password, hint: 'Masukkan Password', obscuredText: true,),
             const SizedBox(height: 48,),
-            ElevatedButton(
-                onPressed: (){
-                  if(!_viewModel.isLoading){
-                    _viewModel.login(context, username: _username.text, password: _password.text);
-                  }
-            }, child: Observer(
-              builder: (_) {
-                return Center(child: _viewModel.isLoading
-                    ? const SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 4.0,))
-                    : const Text('Login'));
+            Observer(
+              builder: (context) {
+                return IngatkanButton(
+                    isLoading: _viewModel.isLoading,
+                    label: 'Login',
+                    onPressed: (){
+                      _viewModel.login(context, username: _username.text, password: _password.text);});
               }
-            )),
+            ),
             const SizedBox(height: 16,),
-            ElevatedButton(
-                onPressed: (){
-                  NavigatorService.push(context, route: const RegisterPage());
-                }, child: const Center(child: Text('Register')))
+            IngatkanButton(label: 'Register', onPressed: (){NavigatorService.push(context, route: const RegisterPage()); })
           ],
         ),
       ),
