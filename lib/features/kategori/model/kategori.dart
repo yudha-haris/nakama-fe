@@ -1,36 +1,26 @@
 class Kategori {
-  String? username;
-  String? email;
-  String? phoneNumber;
-  String? name;
-  String? theme;
-  bool? isAdmin;
+  final String? id;
+  final String? judul;
+  final String? username;
 
   Kategori(
-      {this.username,
-        this.email,
-        this.phoneNumber,
-        this.name,
-        this.theme,
-        this.isAdmin});
+      {
+        this.id,
+        this.judul,
+        this.username,
+      });
 
   Kategori.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    judul = json['judul'];
     username = json['username'];
-    email = json['email'];
-    phoneNumber = json['phone_number'];
-    name = json['name'];
-    theme = json['theme'];
-    isAdmin = json['is_admin'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['username'] = username;
-    data['email'] = email;
-    data['phone_number'] = phoneNumber;
-    data['name'] = name;
-    data['theme'] = theme;
-    data['is_admin'] = isAdmin;
+    data['judul'] = judul;
     return data;
   }
 }
