@@ -23,13 +23,14 @@ abstract class KategoriRemoteDataSources {
         String? username,
       });
 
-  Future<bool> getKategori(
+  Future<List<Kategori>> getKategori(
       {
         String? username,
       });
 }
 
 class KategoriRemoteDataSourcesImpl implements KategoriRemoteDataSources {
+
   @override
   Future<bool> addKategori({
     String? idKategori,
@@ -50,7 +51,7 @@ class KategoriRemoteDataSourcesImpl implements KategoriRemoteDataSources {
   }
 
   @override
-  Future<bool> deleteKategori({String? idKategori}){
+  Future<bool> deleteKategori({String? idKategori}) async {
     var url = Uri.https(Environment.baseUrl, Environment.deleteKategori);
     var response = await http.post(url, body: {'id_kategori': idKategori});
     if (response.statusCode == 200) {
@@ -80,7 +81,7 @@ class KategoriRemoteDataSourcesImpl implements KategoriRemoteDataSources {
   }
 
   @override
-  Future<List<Kategori>> getKategori({String? username}){
+  Future<List<Kategori>> getKategori({String? username}) async {
     var url = Uri.https(Environment.baseUrl, Environment.getAllKategori);
     var response = await http.post(url, body: {'username': username});
     if (response.statusCode != 200) {

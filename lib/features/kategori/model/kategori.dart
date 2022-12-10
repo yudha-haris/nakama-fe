@@ -3,24 +3,17 @@ class Kategori {
   final String? judul;
   final String? username;
 
-  Kategori(
-      {
+  Kategori({
         this.id,
         this.judul,
         this.username,
       });
 
-  Kategori.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    judul = json['judul'];
-    username = json['username'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['username'] = username;
-    data['judul'] = judul;
-    return data;
+  static Kategori parseFromResponse(List<dynamic> data){
+    return Kategori(
+      id: data[0].toString(),
+      judul: data[1].toString(),
+      username: data[2].toString(),
+    );
   }
 }

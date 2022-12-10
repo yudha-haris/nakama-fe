@@ -13,7 +13,7 @@ import 'package:mobx/mobx.dart';
 
 part 'view_model.g.dart';
 
-class KategoriViewModel = KategoriViewModelBase with _$ActivityViewModel;
+class KategoriViewModel = KategoriViewModelBase with _$KategoriViewModel;
 
 abstract class KategoriViewModelBase with Store {
   final KategoriRemoteDataSources _dataSources =

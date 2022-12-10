@@ -120,6 +120,44 @@ mixin _$ActivityViewModel on ActivityViewModelBase, Store {
         .run(() => super.getActivity(context, username: username));
   }
 
+  late final _$putActivityAsyncAction =
+      AsyncAction('ActivityViewModelBase.putActivity', context: context);
+
+  @override
+  Future<void> putActivity(BuildContext context,
+      {String? judul, String? isi, String? idActivity}) {
+    return _$putActivityAsyncAction.run(() => super
+        .putActivity(context, judul: judul, isi: isi, idActivity: idActivity));
+  }
+
+  late final _$postActivityAsyncAction =
+      AsyncAction('ActivityViewModelBase.postActivity', context: context);
+
+  @override
+  Future<void> postActivity(BuildContext context,
+      {String? judul, String? isi}) {
+    return _$postActivityAsyncAction
+        .run(() => super.postActivity(context, judul: judul, isi: isi));
+  }
+
+  late final _$deleteActivityAsyncAction =
+      AsyncAction('ActivityViewModelBase.deleteActivity', context: context);
+
+  @override
+  Future<void> deleteActivity(BuildContext context, {String? idActivity}) {
+    return _$deleteActivityAsyncAction
+        .run(() => super.deleteActivity(context, idActivity: idActivity));
+  }
+
+  late final _$finishActivityAsyncAction =
+      AsyncAction('ActivityViewModelBase.finishActivity', context: context);
+
+  @override
+  Future<void> finishActivity(BuildContext context, {String? idActivity}) {
+    return _$finishActivityAsyncAction
+        .run(() => super.finishActivity(context, idActivity: idActivity));
+  }
+
   @override
   String toString() {
     return '''
