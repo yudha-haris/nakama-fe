@@ -63,13 +63,22 @@ class _EditTimelinePageState extends State<EditTimelinePage> {
               child: Column(
                 children: [
                   const SizedBox(height: 16,),
+                  const Padding(
+                    padding: const EdgeInsets.symmetric(vertical : 16),
+                    child: Text("Masukkan judul : "),
+                  ),
                   IngatkanTextField(
-                    hint: 'Masukkan judul',
+                    hint: 'judul',
                     controller: judul,),
                   const SizedBox(height: 16,),
+                  const Padding(
+                    padding: const EdgeInsets.symmetric(vertical : 16),
+                    child: Text("Masukkan isi : "),
+                  ),
                   IngatkanTextField(
-                    hint: 'Masukkan isi',
+                    hint: 'isi',
                     controller: isi,
+                    maxLine: 10,
                   ),
                 ],
               ),

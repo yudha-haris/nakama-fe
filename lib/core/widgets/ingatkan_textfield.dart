@@ -4,15 +4,10 @@ class IngatkanTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
   final bool obscuredText;
+  final int maxLine;
   final Widget? prefixIcon;
 
-  const IngatkanTextField(
-      {Key? key,
-      required this.controller,
-      required this.hint,
-      this.prefixIcon,
-      this.obscuredText = false})
-      : super(key: key);
+  const IngatkanTextField({Key? key, required this.controller, required this.hint, this.obscuredText = false, this.maxLine = 1, this.prefixIcon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +20,7 @@ class IngatkanTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(10)),
       width: double.infinity,
       child: TextField(
+        maxLines: maxLine == 99 ? null : maxLine,
         controller: controller,
         obscureText: obscuredText,
         decoration: InputDecoration(
