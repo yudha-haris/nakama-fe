@@ -6,6 +6,7 @@ import 'package:ingatkan/core/global/profile_data.dart';
 import 'package:ingatkan/features/timeline/model/timeline.dart';
 import 'package:ingatkan/services/dialog_service.dart';
 
+import '../../../../core/widgets/ingatkan_textfield.dart';
 import '../view_model/view_model.dart';
 
 class EditTimelinePage extends StatefulWidget {
@@ -57,16 +58,21 @@ class _EditTimelinePageState extends State<EditTimelinePage> {
       ),
       body: Observer(
           builder: (context) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextField(
-                  controller: judul,
-                ),
-                TextField(
-                  controller: isi,
-                ),
-              ],
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  const SizedBox(height: 16,),
+                  IngatkanTextField(
+                    hint: 'Masukkan judul',
+                    controller: judul,),
+                  const SizedBox(height: 16,),
+                  IngatkanTextField(
+                    hint: 'Masukkan isi',
+                    controller: isi,
+                  ),
+                ],
+              ),
             );
           }
       ),

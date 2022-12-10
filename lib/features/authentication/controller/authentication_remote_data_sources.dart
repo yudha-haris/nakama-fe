@@ -25,7 +25,7 @@ class AuthenticationRemoteDataSourcesImpl implements AuthenticationRemoteDataSou
 
   @override
   Future<bool> register({String? username, String? password, String? name, String? phone, String? email}) async {
-    var url = Uri.http(Environment.baseUrl, Environment.registerUrl);
+    var url = Uri.https(Environment.baseUrl, Environment.registerUrl);
     var response = await http.post(url,
         body: {'username': username ?? '',
           'password': password ?? '',

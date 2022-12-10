@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../../../../core/widgets/ingatkan_textfield.dart';
 import '../../model/activity.dart';
 import '../view_model/view_model.dart';
 
@@ -46,15 +47,22 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
               icon: Icon(Icons.save))
         ],
       ),
-      body: Column(
-        children: [
-          TextField(
-            controller: judul,
-          ),
-          TextField(
-            controller: isi,
-          )
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [
+            const SizedBox(height: 16,),
+            IngatkanTextField(
+              hint: 'Masukkan judul',
+              controller: judul,
+            ),
+            const SizedBox(height: 16,),
+            IngatkanTextField(
+              hint: 'Masukkan isi',
+              controller: isi,
+            ),
+          ],
+        ),
       ),
     );
   }
