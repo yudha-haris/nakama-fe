@@ -40,7 +40,8 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: const HomePageDrawer(),
-      body: PageView(
+      body: (ProfileData.data.isAdmin ?? false)
+        ? PageView(
         physics: const NeverScrollableScrollPhysics(),
         allowImplicitScrolling: false,
         controller: _controller,
@@ -48,10 +49,13 @@ class _HomePageState extends State<HomePage> {
           ActivitiesPage(),
           TimelinePage(),
         ],
-      ),
-      bottomNavigationBar: HomePageBottomNavigationBar(
+      )
+          : TimelinePage(),
+      bottomNavigationBar: (ProfileData.data.isAdmin ?? false)
+      ? HomePageBottomNavigationBar(
         controller: _controller,
-      ),
+      )
+      : null,
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {

@@ -4,8 +4,9 @@ class IngatkanTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
   final bool obscuredText;
+  final int maxLine;
 
-  const IngatkanTextField({Key? key, required this.controller, required this.hint, this.obscuredText = false}) : super(key: key);
+  const IngatkanTextField({Key? key, required this.controller, required this.hint, this.obscuredText = false, this.maxLine = 1}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +16,9 @@ class IngatkanTextField extends StatelessWidget {
           border: Border.all(color: Colors.blueGrey, width: 1),
           borderRadius: BorderRadius.circular(10)
       ),
-      height: 50,
       width: double.infinity,
       child: TextField(
+        maxLines: maxLine == 99 ? null : maxLine,
         controller: controller,
         obscureText: obscuredText,
         decoration: InputDecoration(

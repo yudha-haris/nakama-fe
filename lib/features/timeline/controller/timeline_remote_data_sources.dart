@@ -9,9 +9,9 @@ import 'package:ingatkan/features/timeline/model/timeline.dart';
 abstract class TimelineRemoteDataSources {
   Future<List<Timeline>> getAllTimeline();
   Future<Timeline> getTimeline({String? id});
-  Future<bool> createTimeline({String? username, String? judul, String? isi});
-  Future<bool> updateTimeline({String? id, String? judul, String? isi});
-  Future<bool> deleteTimeline({String? id, String? judul});
+  Future<String> createTimeline({String? username, String? judul, String? isi});
+  Future<String> updateTimeline({String? id, String? judul, String? isi});
+  Future<String> deleteTimeline({String? id, String? judul});
 }
 
 class TimelineRemoteDataSourcesImpl implements TimelineRemoteDataSources {
@@ -34,7 +34,7 @@ class TimelineRemoteDataSourcesImpl implements TimelineRemoteDataSources {
   }
 
   @override
-  Future<bool> createTimeline({String? username, String? judul, String? isi}) async {
+  Future<String> createTimeline({String? username, String? judul, String? isi}) async {
     var url = Uri.https(Environment.baseUrl, Environment.createTimeline);
     var response = await http.post(url, body:
     {'username': username ?? '',
@@ -43,21 +43,25 @@ class TimelineRemoteDataSourcesImpl implements TimelineRemoteDataSources {
     });
 
     if(response.statusCode == 200){
-      return true;
+      var data = jsonDecode(response.body);
+      String message = data["message"];
+      return message;
     } else {
       throw Error(statusCode: response.statusCode, message: 'Jaringan bermasalah');
     }
   }
 
   @override
-  Future<bool> deleteTimeline({String? id, String? judul}) async {
+  Future<String> deleteTimeline({String? id, String? judul}) async {
     var url = Uri.https(Environment.baseUrl, Environment.deleteTimeline);
     var response = await http.post(url, body: {
       "id_timeline": id ?? '',
       "judul": judul ?? '',
     });
     if(response.statusCode == 200){
-      return true;
+      var data = jsonDecode(response.body);
+      String message = data["message"];
+      return message;
     } else {
       throw Error(statusCode: response.statusCode, message: 'Jaringan bermasalah');
     }
@@ -81,7 +85,7 @@ class TimelineRemoteDataSourcesImpl implements TimelineRemoteDataSources {
   }
 
   @override
-  Future<bool> updateTimeline({String? id, String? judul, String? isi}) async {
+  Future<String> updateTimeline({String? id, String? judul, String? isi}) async {
     // TODO: implement updateTimeline
     var url = Uri.https(Environment.baseUrl, Environment.updateTimeline);
     var response = await http.post(url, body: {
@@ -90,7 +94,9 @@ class TimelineRemoteDataSourcesImpl implements TimelineRemoteDataSources {
       "isi": isi ?? '',
     });
     if(response.statusCode == 200){
-      return true;
+      var data = jsonDecode(response.body);
+      String message = data["message"];
+      return message;
     } else {
       throw Error(statusCode: response.statusCode, message: 'Jaringan bermasalah');
     }

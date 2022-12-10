@@ -35,7 +35,7 @@ abstract class TimelineViewModelBase with Store {
       var temp = await _dataSources.getAllTimeline();
       log(temp.toString());
       _timelines.clear();
-      for(var i = 0; i < temp.length; i++){
+      for(var i = temp.length - 1; i >= 0; i--){
         _timelines.add(temp[i]);
       }
       _isLoading.value = false;
@@ -52,8 +52,15 @@ abstract class TimelineViewModelBase with Store {
       var temp = await _dataSources.createTimeline(username: ProfileData.data.username, judul: judul, isi: isi);
 
       _isLoading.value = false;
-      if(temp){
-        NavigatorService.pushReplacement(context, route: const HomePage());
+      if(temp.contains("berhasil")){
+        _dialogService.actionDialog(context,
+            title: 'Berhasil',
+            message: temp,
+            action: () async {
+              NavigatorService.pushReplacement(context, route: const HomePage());
+            }
+        );
+
       } else {
         _dialogService.networkError(context);
       }
@@ -77,8 +84,14 @@ abstract class TimelineViewModelBase with Store {
         isi: isi,
       );
       _isLoading.value = false;
-      if(temp){
-        NavigatorService.pushReplacement(context, route: const HomePage());
+      if(temp.contains("berhasil")){
+        _dialogService.actionDialog(context,
+            title: 'Berhasil',
+            message: temp,
+            action: () async {
+              NavigatorService.pushReplacement(context, route: const HomePage());
+            }
+        );
       } else {
         _dialogService.networkError(context);
       }
@@ -96,8 +109,14 @@ abstract class TimelineViewModelBase with Store {
       var temp = await _dataSources.deleteTimeline(id: id);
 
       _isLoading.value = false;
-      if(temp){
-        NavigatorService.pushReplacement(context, route: const HomePage());
+      if(temp.contains("berhasil")){
+        _dialogService.actionDialog(context,
+            title: 'Berhasil',
+            message: temp,
+            action: () async {
+              NavigatorService.pushReplacement(context, route: const HomePage());
+            }
+        );
       } else {
         _dialogService.networkError(context);
       }

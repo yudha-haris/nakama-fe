@@ -74,8 +74,8 @@ class _TimelinePageState extends State<TimelinePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(writer),
-                                Text(timeStamp),
+                                Text("Writer : " + writer),
+                                Text("Date : " + timeStamp),
                               ],
                             ),
                             Row(
@@ -83,14 +83,29 @@ class _TimelinePageState extends State<TimelinePage> {
                               children: [
                                 Column(
                                   children: [
-                                    Text(judul),
-                                    Text(isi),
-                                  ],
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                                    child: Expanded(child: Text(judul, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),)
+
+
+                                    )],
                                 ),
-                                if(_viewModel.isLoading && _viewModel.timelines.isNotEmpty)
-                                  const Center(
-                                    child: CircularProgressIndicator(),
-                                  )
+                                // if(_viewModel.isLoading && _viewModel.timelines.isNotEmpty)
+                                //   Expanded(child: const Center(
+                                //     child: CircularProgressIndicator(),
+                                //   ),),
+
+                              ],
+                            ),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(child: Text(isi, maxLines: 2,),),
+                                // if(_viewModel.isLoading && _viewModel.timelines.isNotEmpty)
+                                //   const Center(
+                                //     child: CircularProgressIndicator(),
+                                //   )
                               ],
                             ),
                           ],
