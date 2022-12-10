@@ -88,20 +88,54 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                                 children: [
                                   IconButton(
                                       onPressed: () {
-                                        // tambah konfirmasi popup
-                                        _viewModel.finishActivity(context,
-                                            idActivity: _viewModel
-                                                .activities[index].id);
+                                        DialogService().actionOrCancelDialog(
+                                          context,
+                                          title: 'Selesaikan Activity',
+                                          message:
+                                              'Apakah anda yakin untuk menyelesaikan activity ${_viewModel.activities[index].judul}?',
+                                          action: () async {
+                                            Navigator.of(context).pop();
+                                            DialogService().actionDialog(
+                                              context,
+                                              title: 'Selesaikan Activity',
+                                              message:
+                                                  'Activity ${_viewModel.activities[index].judul} selesai!',
+                                              action: () async {
+                                                await _viewModel.finishActivity(
+                                                    context,
+                                                    idActivity: _viewModel
+                                                        .activities[index].id);
+                                              },
+                                            );
+                                          },
+                                        );
                                       },
-                                      icon: Icon(Icons.check)),
+                                      icon: const Icon(Icons.check)),
                                   IconButton(
                                       onPressed: () {
-                                        // tambah konfirmasi popup
-                                        _viewModel.deleteActivity(context,
-                                            idActivity: _viewModel
-                                                .activities[index].id);
+                                        DialogService().actionOrCancelDialog(
+                                          context,
+                                          title: 'Hapus Activity',
+                                          message:
+                                              'Apakah anda yakin untuk mengapus ${_viewModel.activities[index].judul}?',
+                                          action: () async {
+                                            Navigator.of(context).pop();
+                                            DialogService().actionDialog(
+                                              context,
+                                              title: 'Hapus Activity',
+                                              message:
+                                                  'Activity ${_viewModel.activities[index].judul} berhasil dihapus!',
+                                              action: () async {
+                                                await _viewModel.deleteActivity(
+                                                    context,
+                                                    idActivity: _viewModel
+                                                        .activities[index].id);
+                                              },
+                                            );
+                                          },
+                                        );
                                       },
-                                      icon: Icon(Icons.delete))
+                                      icon: const Icon(Icons.delete))
                                 ],
                               ),
                             ],
