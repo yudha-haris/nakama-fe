@@ -45,7 +45,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
                       message: 'Harap masukkan nama activity!');
                 } else {
                   await _viewModel.postActivity(context,
-                      judul: judul.text, isi: isi.text);
+                      judul: judul.text, isi: isi.text, kategori: kategori.text);
                 }
               },
               icon: const Icon(Icons.save))

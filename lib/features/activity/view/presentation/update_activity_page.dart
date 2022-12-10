@@ -23,7 +23,7 @@ class _UpdateActivityPageState extends State<UpdateActivityPage> {
   void initState() {
     judul = TextEditingController(text: widget.activity.judul);
     isi = TextEditingController(text: widget.activity.isi);
-
+    kategori = TextEditingController(text: kategories());
     super.initState();
   }
 
@@ -31,7 +31,18 @@ class _UpdateActivityPageState extends State<UpdateActivityPage> {
   void dispose() {
     judul.dispose();
     isi.dispose();
+    kategori.dispose();
     super.dispose();
+  }
+
+  String kategories(){
+    if(widget.activity.categoryId == null){
+      return '';
+    } else if(widget.activity.categoryId!.isEmpty){
+      return '';
+    }
+    print(widget.activity.categoryId.toString());
+    return (widget.activity.categoryId.toString().substring(1, (widget.activity.categoryId?.toString().length ?? 3) -1)).replaceAll(' ', '');
   }
 
   @override

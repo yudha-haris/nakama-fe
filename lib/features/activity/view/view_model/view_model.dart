@@ -7,6 +7,7 @@ import 'package:ingatkan/features/kategori/controller/kategori_remote_data_sourc
 import 'package:ingatkan/services/dialog_service.dart';
 import 'package:ingatkan/services/navigator_service.dart';
 import 'package:mobx/mobx.dart';
+import '../../../kategori/model/kategori.dart';
 import '../../controller/activity_remote_data_sources.dart';
 import '../../model/activity.dart';
 part 'view_model.g.dart';
@@ -63,8 +64,51 @@ abstract class ActivityViewModelBase with Store {
       var temp = await _dataSources.getActivity(username: username);
       log(temp.toString());
       _activities.clear();
+      
+      String tempID = temp[0].id ?? '';
+      List<Activity> tempActivity = [];
+      List<String> categories = [];
+      Activity? real = temp[0];
+
+      var tempData = await _dataKategori.getKategori(username: ProfileData.data.username);
+      Map<String, String> categoryyy = {};
+      for(var i = 0; i < tempData.length; i++){
+        categoryyy[tempData[i].id ?? ''] = tempData[i].judul ?? '';
+      }
+
+
       for (var i = 0; i < temp.length; i++) {
-        _activities.add(temp[i]);
+        if(temp[i].id != tempID){
+          real?.categoryId = categories;
+
+          tempActivity.add(real!);
+          real = temp[i];
+
+          categories= [];
+          categories.add(categoryyy[temp[i].tempCategory ?? ''] ?? '');
+          log('================');
+          log(categories.toString());
+          tempID = temp[i].id ?? '';
+
+        } else {
+
+          tempID = real?.id ?? '';
+          categories.add(categoryyy[temp[i].tempCategory ?? ''] ?? '');
+          log('*****************');
+          log(categories.toString());
+          if(i == temp.length - 1){
+            real?.categoryId = categories;
+
+            tempActivity.add(real!);
+          }
+        }
+      }
+
+      _activities.clear();
+
+      for(var i = 0; i < tempActivity.length; i++){
+        log(tempActivity[i].judul.toString() + tempActivity[i].categoryId.toString());
+        _activities.add(tempActivity[i]);
       }
       _isLoading.value = false;
     } catch (e) {
@@ -93,11 +137,16 @@ abstract class ActivityViewModelBase with Store {
 
       var listIdKategori = [];
 
-      var notFound = false;
+      var notFound = true;
 
       var tempData =
           await _dataKategori.getKategori(username: ProfileData.data.username);
 
+      log('tempData: ');
+      log(tempData.toString());
+
+      log('tempKategoris: ');
+      log(tempKategoris.toString());
       if (listIdKategori.isNotEmpty) {
         for (int i = 0; i < tempKategoris.length; i++) {
           for (int j = 0; j < tempData.length; j++) {
@@ -113,8 +162,8 @@ abstract class ActivityViewModelBase with Store {
       }
 
       if (notFound) {
-        _dialogService.showMessageDialog(context,
-            message: "Create gagal karena nama kategori tidak terdaftar");
+        // _dialogService.showMessageDialog(context,
+        //     message: "Create gagal karena nama kategori tidak terdaftar");
       } else {
         var temp = await _dataSources.putActivity(
           idActivity: idActivity,
@@ -160,10 +209,16 @@ abstract class ActivityViewModelBase with Store {
 
       var notFound = false;
 
-      var tempData =
+      List<Kategori> tempData =
           await _dataKategori.getKategori(username: ProfileData.data.username);
 
-      if (listIdKategori.isNotEmpty) {
+      log('tempData: ');
+      log(tempData.toString());
+
+      log('tempKategoris: ');
+      log(tempKategoris.toString());
+
+      if (tempKategoris.isNotEmpty) {
         for (int i = 0; i < tempKategoris.length; i++) {
           for (int j = 0; j < tempData.length; j++) {
             if (tempData[j].judul == tempKategoris[i]) {
@@ -177,6 +232,7 @@ abstract class ActivityViewModelBase with Store {
         }
       }
 
+      log('listIdKategori: ');
       log(listIdKategori.toString());
 
       if (notFound) {
