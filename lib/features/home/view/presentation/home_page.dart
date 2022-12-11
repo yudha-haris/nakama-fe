@@ -13,6 +13,7 @@ import 'package:ingatkan/features/profile/view/view_model/view_model.dart';
 import 'package:ingatkan/features/timeline/view/presentation/create_timeline_page.dart';
 import 'package:ingatkan/features/timeline/view/presentation/timeline_page.dart';
 import 'package:ingatkan/services/navigator_service.dart';
+import 'package:ingatkan/services/shared_prefs.dart';
 import 'package:provider/provider.dart';
 
 import '../../../authentication/model/profile.dart';
@@ -130,6 +131,7 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
             const Spacer(),
             IngatkanButton(
                 label: 'Keluar', onPressed: (){
+                  SharedPrefs().removeUser();
                   ProfileData.data = Profile();
                   NavigatorService.pushReplacement(context, route: const LoginPage());
             }),
