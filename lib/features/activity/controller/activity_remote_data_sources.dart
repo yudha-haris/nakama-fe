@@ -129,7 +129,7 @@ class ActivityRemoteDataSourcesImpl implements ActivityRemoteDataSources {
     var rawList = responseBody['data'] as List;
     List<Activity> result = [];
     for (int i = 0; i < rawList.length; i++) {
-      result.add(Activity.parseFromResponse(rawList[i]));
+      result.add(Activity.parseFromResponseHistory(rawList[i]));
     }
     return result;
   }
