@@ -88,9 +88,11 @@ abstract class AuthenticationViewModelBase with Store {
           if(e.statusCode == 401){
             _dialogService.showMessageDialog(context, title: 'Username sudah tersedia', message: 'Periksa kembali!');
           }
+        } else {
+          log(e.toString());
+          _dialogService.networkError(context);
         }
-        log(e.toString());
-        _dialogService.networkError(context);
+
       }
     }
 
